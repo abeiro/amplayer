@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport"
+	content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+<link href="skins/default.css" rel="stylesheet" type="text/css">
+<title>Ampache Player</title>
+</head>
+<body>
+
+	
+  <script src="js/jquery-1.9.1.min.js"></script>
+  <script type="text/javascript" language="javascript" src="js/jquery.dataTables.js"></script>
+  <script src="js/xml2array.js"></script>
+  <script src="js/notification.js"></script>
+  <script src="js/sha256.js"></script>
+  <script src="js/file_get_contents.js"></script>
+  <script src="js/cache.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/skin.js"></script>
+  <script src="js/playlist.js"></script>
+  <script src="js/ampache.js"></script>
+  
+  
+	<div class="app">
+		<div id="playerCanvas">
+			<h1 id="title"></h1>
+			<h2 id="artist"></h2>
+			<h3 id="album"></h3>
+			<img src="" style='position: absolute; top: 0px; right: 0px' id="art" />
+			<hr>
+			<audio controls autoplay id='ampacheplayer'>
+
+				Your browser does not support the audio tag.
+			</audio>
+			<br />
+			<div id="toolbar">
+				<span id="cPrev">PREV</span> :: 
+				<span id="cNext">NEXT</span> ::
+				<span id="cSettings">SETTINGS</span>
+			</div>
+			<div id="playlist"></div>
+			<div id="settings">
+				Ampache server settings:<br />
+				URL : <input type="text" id="surl" name="url" value=""><br />
+				User: <input type="text" id="suser" name="user" value=""><br />
+				Pass: <input type="password" id="spass" name="pass" value=""><br />
+				<input type="button" id="SaveSettings" value="Save!">
+
+			</div>
+		</div>
+
+	</div>
+	
+</body>
+</html>

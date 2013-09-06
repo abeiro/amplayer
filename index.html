@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport"
+	content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+<link href="skins/default.css" rel="stylesheet" type="text/css">
+<title>AMPACHE PLAYER</title>
+</head>
+<body>
+
+	<script type="text/javascript" src="cordova.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript">
+		app.initialize();
+	</script>
+  <script src="js/jquery-1.9.1.min.js"></script>
+  <script type="text/javascript" language="javascript" src="js/jquery.dataTables.js"></script>
+  <script src="js/xml2array.js"></script>
+  <script src="js/notification.js"></script>
+  <script src="js/sha256.js"></script>
+  <script src="js/file_get_contents.js"></script>
+
+  <script src="js/cache.js"></script>
+  <script src="js/skin.js"></script>
+  <script src="js/playlist.js"></script>
+  <script src="js/ampache.js"></script>
+  
+	<div class="app">
+		<div id="playerCanvas">
+			<h1 id="title"></h1>
+			<h2 id="artist"></h2>
+			<h3 id="album"></h3>
+			<img src="" style='position: absolute; top: 0px; right: 0px' id="art" />
+			<hr>
+			<audio controls autoplay id='ampacheplayer' >
+
+				Your browser does not support the audio tag.
+			</audio>
+			<br />
+			<div id="toolbar">
+				<span id="cPrev" >PREV</span> :: 
+				<span id="cNext" >NEXT</span>
+			</div>
+			<div id="playlist"></div>
+		</div>
+
+	</div>
+</body>
+</html>
