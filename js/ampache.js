@@ -58,17 +58,30 @@ AMPACHE.prototype._getSongs=function(cmd,ret) {
   
 }
 
+AMPACHE.prototype.createObjectURL=function  ( file ) {
+    if ( window.webkitURL ) {
+        return window.webkitURL.createObjectURL( file );
+    } else if ( window.URL && window.URL.createObjectURL ) {
+        return window.URL.createObjectURL( file );
+    } else {
+        return null;
+    }
+}
 
 AMPACHE.prototype.loadImage=function (resource,ele) {
 
-	var xhr = new XMLHttpRequest();
-	xhr.open('GET', resource, true);
-	xhr.responseType = 'blob';
-	xhr.onload = function(e) {
-		ele.src = window.webkitURL.createObjectURL(this.response);
-	};
-
-	xhr.send();
+	try {
+		ele.src=resource;
+	} catch (cap) {
+		var xhr = new XMLHttpRequest();
+		var _this=this;
+		xhr.open('GET', resource, true);
+		xhr.responseType = 'blob';
+		xhr.onload = function(e) {
+			ele.src = _this.createObjectURL(this.response);
+		};
+		xhr.send();
+	}
 }
 
 AMPACHE.prototype.localplay=function(songnumber) {
@@ -76,10 +89,11 @@ AMPACHE.prototype.localplay=function(songnumber) {
   currentSong=songnumber;
   
   _("ampacheplayer").src=this._songs.root.song[songnumber].url;
+  _("ampacheplayer").load();
   _("title").innerHTML=this._songs.root.song[songnumber].title;
   _("artist").innerHTML=this._songs.root.song[songnumber].artist;
   _("album").innerHTML=this._songs.root.song[songnumber].album;
-  _("art").src=this._songs.root.song[songnumber].art;  
+  //_("art").src=this._songs.root.song[songnumber].art;  
 
   this.loadImage(this._songs.root.song[songnumber].art,_("art"));
   
@@ -138,6 +152,7 @@ $(document).ready(function(){
 	_("cNext").onclick=function() {conn.nextSong()}
 	_("cSettings").onclick=function() {showSettings()}
 	_("ampacheplayer").addEventListener("ended",function() {conn.nextSong()});
+	_("ampacheplayer").addEventListener("canplay",function() {_("ampacheplayer").play()});
 
 	_("cRandomPl").addEventListener("click",function() {randomizePL()});
 	// Load preferences

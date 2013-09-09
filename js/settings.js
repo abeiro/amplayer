@@ -3,7 +3,14 @@ var globalUrl="";
 var globalPassword="";
 var globalUsername="";
 var CustomStorage;
-if (!chrome.storage) {
+
+try {
+	browserApi=chrome.storage;
+} catch (thisIsNotAChromeApp) {
+	browserApi=false;
+
+}
+if ((!browserApi)) {
 
 	CustomStorage=new Object();
 	CustomStorage.setVar=function (vname, vvalue,callback) {
