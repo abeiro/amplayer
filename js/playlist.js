@@ -28,16 +28,38 @@ function loadPlayList() {
 		.dataTable( {
         "aaData": songsArray,
         "aoColumns": [
-			{ "sTitle": "","sWidth": "22px" },
+			{ "sNumber": "","sWidth": "22px" },
             { "sTitle": "Title", "sWidth": "150px"},
-            { "sTitle": "Artist" },
-            { "sTitle": "Album" }
+            { "sArtis": "Artist" },
+            { "sAlbum": "Album" }
         ]
     } );   
 	$("#playlistContent_paginate").on("click", "a", function() { ceventFired(null) });
 	//$('#playlistContent_paginate').live('click', function(){ ceventFired(null); });
 	//$('#playlistContent tbody tr').live('click', function () {ceventFired(null)});
 	//document.querySelector(".plButton").onclick=function() {conn.nextSong()}
+    conn.loadImage("img/logo.png",_("art"));
 	ceventFired(null);
 	
+}
+
+function randomizePL() {
+	asource=new Array();
+	for (i in conn._songs.root.song) 
+		asource[i]=conn._songs.root.song[i];
+
+    a=shuffleArray(asource);
+	conn._songs.root.song=a;
+	loadPlayList();
+
+}
+
+function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+    return array;
 }

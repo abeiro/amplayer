@@ -8,16 +8,19 @@ body {
 }
 
 #title {
-  font-size:20px;
+  font-size:22px;
   padding:0px;
   margin:0px;
-  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black
+  text-shadow: white 0.1em 0.1em 0.2em;
+  color:white;
 }
 
 #artist {
   font-size:18px;
   padding:0px;
   margin:0px;
+  text-shadow: white 0.1em 0.1em 0.2em;
+  color:white;
 }
 
 #album {
@@ -101,7 +104,7 @@ div.plButton:hover {
   font-weight:bold;
 }
 
-#cNext:hover,#cPrev:hover {
+#cNext:hover,#cPrev:hover,#cSettings:hover {
   opacity:0.75;
 
 }
@@ -116,5 +119,11 @@ div.plButton:hover {
 	height:100%;
 	color:black;
 	min-height:400px;
+	padding:15px;
+
+}
+
+#subHeader {
+	min-height:130px;
 
 }

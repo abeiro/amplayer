@@ -14,5 +14,5 @@
    "name": "Ampache Player",
    "permissions": [ "http://*/", "notifications", "storage" ],
    "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "0.3"
+   "version": "0.3.1"
 }

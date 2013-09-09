@@ -11,7 +11,7 @@ function _(id) {
 
 function AMPACHE(admin, pass, url){
 
-  
+  this.loadImage("img/loading.gif",_("art"));
   this._user=admin;
   this._pass=pass;
   //this._time = 
@@ -132,10 +132,14 @@ var currentSong;
 
 /* Initializator */
 $(document).ready(function(){
+
+	/* Add event listeners */
 	_("cPrev").onclick=function() {conn.prevSong()}
 	_("cNext").onclick=function() {conn.nextSong()}
 	_("cSettings").onclick=function() {showSettings()}
 	_("ampacheplayer").addEventListener("ended",function() {conn.nextSong()});
+
+	_("cRandomPl").addEventListener("click",function() {randomizePL()});
 	// Load preferences
 	loadPreferences();
 	

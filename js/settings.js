@@ -65,6 +65,15 @@ function loadPreferences() {
 function showSettings() {
 
 	_("settings").style.display="block";
+	CustomStorage.getVar("username",function (e) {
+		_("suser").value=e.username;
+	});
+	CustomStorage.getVar("password",function (e) {
+		_("spass").value=e.password;
+	});
+	CustomStorage.getVar("url",function (e) {
+		_("surl").value=e.url;
+	});
 	_("SaveSettings").onclick=function() {
 		CustomStorage.setVar("url",_("surl").value,function (e) {console.log(e)});
 		CustomStorage.setVar("username",_("suser").value,function (e) {console.log(e)});
