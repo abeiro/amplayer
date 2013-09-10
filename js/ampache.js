@@ -70,9 +70,9 @@ AMPACHE.prototype.createObjectURL=function  ( file ) {
 
 AMPACHE.prototype.loadImage=function (resource,ele) {
 
-	try {
+	if (browserApi==false)
 		ele.src=resource;
-	} catch (cap) {
+	else {
 		var xhr = new XMLHttpRequest();
 		var _this=this;
 		xhr.open('GET', resource, true);
@@ -153,6 +153,13 @@ $(document).ready(function(){
 	_("cSettings").onclick=function() {showSettings()}
 	_("ampacheplayer").addEventListener("ended",function() {conn.nextSong()});
 	_("ampacheplayer").addEventListener("canplay",function() {_("ampacheplayer").play()});
+	_("ampacheplayer").addEventListener("error",function(e) {
+		console.log("Error:"+e);
+		_("title").innerHTML="Error";
+		_("artist").innerHTML="Connection lost";
+		_("album").innerHTML="Maybe session has expired. Reload";
+		}
+	);
 
 	_("cRandomPl").addEventListener("click",function() {randomizePL()});
 	// Load preferences

@@ -3,7 +3,7 @@ var globalUrl="";
 var globalPassword="";
 var globalUsername="";
 var CustomStorage;
-
+var browserApi;
 try {
 	browserApi=chrome.storage;
 } catch (thisIsNotAChromeApp) {
