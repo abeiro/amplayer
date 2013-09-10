@@ -98,7 +98,9 @@ AMPACHE.prototype.localplay=function(songnumber) {
   this.loadImage(this._songs.root.song[songnumber].art,_("art"));
   
   document.title=currentSong+" "+this._songs.root.song[songnumber].title+"::"+this._songs.root.song[songnumber].artist;
+  
   changeFavicon(this._songs.root.song[songnumber].art);
+
   showPopup(this._songs.root.song[songnumber].art,this._songs.root.song[songnumber].title,this._songs.root.song[songnumber].artist+" :: "+this._songs.root.song[songnumber].album)
   
   markSong(currentSong);
@@ -175,8 +177,12 @@ $(document).ready(function(){
 		_('playlistContent').style.width="100%";
 	}, false);
 	window.addEventListener("resize", function() {
-		_('playlistContent').style.width=window.innerWidth+"px";
+		_('playlistContent').style.width=(window.innerWidth-5)+"px";
 	}, false);
+
+	_("title").innerHTML="AMPlayer";
+	_("artist").innerHTML="Welcome!";
+	
 	//currentSong=Math.floor((Math.random()*conn._nsongs)+1)-1;
 	
 });

@@ -28,9 +28,9 @@ function loadPlayList() {
 		.dataTable( {
         "aaData": songsArray,
         "aoColumns": [
-			{ "sNumber": "","sWidth": "22px" },
+			{ "sNumber": "","sWidth": "32px" },
             { "sTitle": "Title", "sWidth": "150px"},
-            { "sArtis": "Artist" },
+            { "sArtist": "Artist" },
             { "sAlbum": "Album" }
         ]
     } );   
