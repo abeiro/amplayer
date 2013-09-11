@@ -1,9 +1,3 @@
- 
-
-// 
-
-//rawdata= file_get_contents(URL);
-//console.log(rawdata);
 
 function _(id) {
   return document.getElementById(id)
@@ -34,10 +28,6 @@ function AMPACHE(admin, pass, url){
 		_this._nsongs=xml.root.songs;
 		_this._getSongs();
 	});
-	
-  // Initialize songs 
-  
-  
   
 }
 
@@ -93,7 +83,7 @@ AMPACHE.prototype.localplay=function(songnumber) {
   _("title").innerHTML=this._songs.root.song[songnumber].title;
   _("artist").innerHTML=this._songs.root.song[songnumber].artist;
   _("album").innerHTML=this._songs.root.song[songnumber].album;
-  //_("art").src=this._songs.root.song[songnumber].art;  
+  
 
   this.loadImage(this._songs.root.song[songnumber].art,_("art"));
   
@@ -103,6 +93,8 @@ AMPACHE.prototype.localplay=function(songnumber) {
 
   showPopup(this._songs.root.song[songnumber].art,this._songs.root.song[songnumber].title,this._songs.root.song[songnumber].artist+" :: "+this._songs.root.song[songnumber].album)
   
+	this.loadArt(this._songs.root.song[songnumber].mbid);
+
   markSong(currentSong);
 }
 
@@ -125,9 +117,73 @@ AMPACHE.prototype.prevSong=function() {
     currentSong=this._nsongs-1;
   conn.localplay(currentSong);
   
-  
 }
 
+
+AMPACHE.prototype.toogleShowMan=function() {
+  
+	$('#playlist').toggle();
+	$('#showCanvas').toggle();
+	
+	//this.loadImage(this._songs.root.song[currentSong].art,_("showCanvasImg"));
+    _('showCanvasImg').style.height=window.innerHeight+"px";
+	if (_('showCanvas').style.display=="none") {
+		_('playerCanvas').style.opacity=1;
+		$('#art').toggle();
+	}
+	else {
+		_('playerCanvas').style.opacity=0.5;
+		$('#art').toggle();
+		
+	}
+   
+}
+
+AMPACHE.prototype.loadArt=function(song_mbid) {
+	_this=this;
+	CustomStorage.getVar(song_mbid,function (varO) {
+		
+		if (varO[song_mbid]) {
+			_this.loadImage(varO[song_mbid],_("showCanvasImg"));
+		} else {
+			$.getJSON("http://musicbrainz.org/ws/2/recording/"+song_mbid+"?inc=artist-credits+isrcs+releases&fmt=json", 
+				function(dataSong)  {
+					console.log(dataSong.releases);
+					_this.loadArtCover(dataSong,dataSong.releases.length-1,song_mbid);
+
+				}).fail(function() { 
+					console.log("Unable to get info for: "+song_mbid);
+				});
+		}
+	});
+   
+}
+
+AMPACHE.prototype.loadArtCover=function(dataSong,_counter,song_mbid) {
+		_this=this;
+		_counterMax=dataSong.releases.length;
+		try {
+			$.getJSON("http://coverartarchive.org/release/"+dataSong.releases[_counter].id,
+			function(dataAlbum)  {
+				console.log("Images");
+				console.log(dataAlbum);
+				img=dataAlbum.images[0].image;
+				_this.loadImage(img,_("showCanvasImg"));
+				CustomStorage.setVar(song_mbid,img,function(e) { console.log(e)});
+			}
+			).fail(function() { 
+				_counter--;
+				if (_counter<0) {
+					console.log("Unable to get art");
+					_this.loadImage("img/noart.jpg",_("showCanvasImg"));
+				}
+				else
+					_this.loadArtCover(dataSong,_counter,song_mbid);
+			});
+		} catch  (idontcare) {
+			console.log("Unable to get art."+idontcare);
+		}
+}
 
 
 function markSong(i){
@@ -146,8 +202,12 @@ function markSong(i){
 var conn;
 var currentSong;
 
-/* Initializator */
+
+/* 
+INITIALIZATION 
+*/
 $(document).ready(function(){
+
 
 	/* Add event listeners */
 	_("cPrev").onclick=function() {conn.prevSong()}
@@ -164,25 +224,56 @@ $(document).ready(function(){
 	);
 
 	_("cRandomPl").addEventListener("click",function() {randomizePL()});
+	_("cShow").addEventListener("click",function() {conn.toogleShowMan()});
 	// Load preferences
 	loadPreferences();
 	
 	var supportsOrientationChange = "onorientationchange" in window,
     orientationEvent = supportsOrientationChange ? "orientationchange" : "resize";
+	
+
 	window.addEventListener(orientationEvent, function() {
-		_('playlistContent').style.width="100%";
+		if (window.innerWidth>window.innerHeight)
+			_('showCanvasImg').style.width=window.innerWidth-5+"px";
+		else
+			_('showCanvasImg').style.height=window.innerHeight-5+"px";
 	}, false);
+
 
 	window.addEventListener(orientationEvent, function() {
 		_('playlistContent').style.width="100%";
+		if (window.innerWidth>window.innerHeight)
+			_('showCanvasImg').style.width=window.innerWidth-5+"px";
+		else
+			_('showCanvasImg').style.height=window.innerHeight-5+"px";
 	}, false);
+
 	window.addEventListener("resize", function() {
 		_('playlistContent').style.width=(window.innerWidth-5)+"px";
+		if (window.innerWidth>window.innerHeight)
+			_('showCanvasImg').style.width=window.innerWidth-5+"px";
+		else
+			_('showCanvasImg').style.height=window.innerHeight-5+"px";
+		
 	}, false);
 
 	_("title").innerHTML="AMPlayer";
 	_("artist").innerHTML="Welcome!";
-	
-	//currentSong=Math.floor((Math.random()*conn._nsongs)+1)-1;
-	
+	$('#showCanvas').toggle();
+
+	if ((browserApi!=false)) {
+		try {
+			/* Tracker */
+			service = analytics.getService('Ampache Player');
+			service.getConfig().addCallback(function (config)  {config.setTrackingPermitted(true) });
+			// Get a Tracker using your Google Analytics app Tracking ID.
+			tracker = service.getTracker('UA-43775693-1');
+			// Record an "appView" each time the user launches your app or goes to a new
+			// screen within the app.
+			tracker.sendAppView('MainView');
+			//currentSong=Math.floor((Math.random()*conn._nsongs)+1)-1;
+		} catch (fucktracker) {
+			console.log("Tracker disabled");
+		}
+	}
 });

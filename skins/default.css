@@ -124,7 +124,31 @@ div.plButton:hover {
 
 }
 
+#settings *{
+	font-size:22px;
+
+}
+
+#settings #versionLabel {
+	font-size:8px;
+	top: 0px;
+	right: 50px;
+	position: absolute;
+	z-index: 1;
+	color: black;
+}
+
 #subHeader {
 	min-height:130px;
 
+}
+
+
+#showCanvas {
+	min-height:300px;
+display: block;
+position: absolute;
+top: 0px;
+lefT: 0px;
+z-index: -2;
 }

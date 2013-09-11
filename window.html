@@ -10,7 +10,7 @@
 </head>
 <body>
 
-	
+  <script src="google-analytics-bundle.js"></script>	
   <script src="js/jquery-1.9.1.min.js"></script>
   <script type="text/javascript" language="javascript" src="js/jquery.dataTables.js"></script>
   <script src="js/xml2array.js"></script>
@@ -21,7 +21,7 @@
   <script src="js/settings.js"></script>
   <script src="js/skin.js"></script>
   <script src="js/playlist.js"></script>
-  <script src="js/ampache.js"></script>
+  
   
   
 	<div class="app">
@@ -42,21 +42,27 @@
 				<span id="cPrev">PREV</span> :: 
 				<span id="cNext">NEXT</span> ::
 				<span id="cRandomPl">RAND PLAYLIST</span> ::
-				<span id="cSettings">SETTINGS</span>
+				<span id="cSettings">SETTINGS</span> ::
+				<span id="cShow">SHOW</span>
 			</div>
 			<div id="playlist"></div>
+			
 			<div id="settings">
 				<h2>Ampache server settings</h2>
-				URL : <input type="text" id="surl" name="url" value="" size="50"><br />
-				User: <input type="text" id="suser" name="user" value=""><br />
-				Pass: <input type="password" id="spass" name="pass" value=""><br />
+				URL Ampache<br /> <input type="text" id="surl" name="url" value="" size="50"><br />
+				User<br /> <input type="text" id="suser" name="user" value=""><br />
+				Pass<br /> <input type="password" id="spass" name="pass" value=""><br />
 				<input type="button" id="SaveSettings" value="Save!">
-
+				<span style='' id="versionLabel">version 0.3.4</span>
 			</div>
 		</div>
-
+	<div id="showCanvas"><img id="showCanvasImg"/></div>
 	</div>
 	
+
+
+
+
+<script src="js/ampache.js"></script>
 </body>
-<span style='font-size:8x;position:absolute;top:0px;right:0px;color:gray;'>version 0.3.4</span>
 </html>

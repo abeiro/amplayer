@@ -36,7 +36,6 @@ else {
 		chrome.storage.local.set(o,callback);
 	}
 	CustomStorage.getVar=function (name,callback) {
-		
 		chrome.storage.local.get(name,callback);
 	}
 
@@ -53,7 +52,7 @@ function loadPreferences() {
 					globalPassword=e.password;
 					CustomStorage.getVar("url",function (e) {
 						if (e.url!=null && e.url!="")
-						globalUrl=e.url;
+							globalUrl=e.url;
 						if ((globalUsername.length>0) && (globalUrl.length>0)) {
 							conn=new AMPACHE(globalUsername,globalPassword,globalUrl);
 							closeSettings();
