@@ -1,3 +1,4 @@
+//This script is released in the BSD license.
 //////////////////////////////////// xml2array() ////////////////////////////////////////
 //See http://www.openjs.com/scripts/xml_parser/
 var not_whitespace = new RegExp(/[^\s]/);//This can be given inside the funciton - I made it a global variable to make the scipt a little bit faster.
