@@ -216,7 +216,8 @@ $(document).ready(function(){
 	_("ampacheplayer").addEventListener("ended",function() {conn.nextSong()});
 	_("ampacheplayer").addEventListener("canplay",function() {_("ampacheplayer").play()});
 	_("ampacheplayer").addEventListener("error",function(e) {
-		console.log("Error:"+e);
+		console.log("Error");
+		console.log(e);
 		_("title").innerHTML="Error";
 		_("artist").innerHTML="Connection lost";
 		_("album").innerHTML="Maybe session has expired. Reload";
