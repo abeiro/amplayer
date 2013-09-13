@@ -138,6 +138,7 @@ AMPACHE.prototype.toogleShowMan = function () {
 
 AMPACHE.prototype.loadArt = function (song_mbid) {
 	_this = this;
+	//http://api.fanart.tv/webservice/artist/3b604d4ff932c063108ac40c1a3af2c0/60a23fda-a440-4ab9-a344-7dfdd2ed341a/JSON/all/1/1/
 	CustomStorage.getVar(song_mbid, function (varO) {
 
 		if (varO[song_mbid]) {
@@ -147,7 +148,14 @@ AMPACHE.prototype.loadArt = function (song_mbid) {
 				"?inc=artist-credits+isrcs+releases&fmt=json",
 				function (dataSong) {
 					console.log(dataSong.releases);
-					_this.loadArtCover(dataSong, dataSong.releases.length - 1, song_mbid);
+					//console.log(dataSong["artist-credit"][0].artist.id);});
+					$.getJSON("http://api.fanart.tv/webservice/artist/"+FANARTAPIKEY+"/"+dataSong["artist-credit"][0].artist.id+"/JSON/artistbackground",
+					  function (dataSong) {
+					    console.log(dataSong[Object.keys(dataSong)[0]].artistbackground);
+					    img=dataSong[Object.keys(dataSong)[0]].artistbackground[0].url;
+					    _this.loadImage(img, _("showCanvasImg"));
+					  });
+					//_this.loadArtCover(dataSong, dataSong.releases.length - 1, song_mbid);
 
 				}).fail(function () {
 				console.log("Unable to get info for: " + song_mbid);

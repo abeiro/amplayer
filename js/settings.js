@@ -4,6 +4,8 @@ var globalPassword="";
 var globalUsername="";
 var CustomStorage;
 var browserApi;
+var FANARTAPIKEY="";
+
 try {
 	browserApi=chrome.storage;
 } catch (thisIsNotAChromeApp) {
