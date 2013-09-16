@@ -5,6 +5,8 @@ var globalUsername="";
 var CustomStorage;
 var browserApi;
 var FANARTAPIKEY="3b604d4ff932c063108ac40c1a3af2c0";
+var useFanArt=false;
+var tracing=true;
 
 try {
 	browserApi=chrome.storage;
@@ -46,6 +48,13 @@ else {
 
 function loadPreferences() {
 
+	CustomStorage.getVar("fanart",function (e) {
+		if (e.fanart)
+			useFanArt=true;
+		else
+			useFanArt=false;
+	});
+
 	CustomStorage.getVar("username",function (e) {
 		if (e.username!=null && e.username!="")
 			globalUsername=e.username;
@@ -82,10 +91,16 @@ function showSettings() {
 	CustomStorage.getVar("url",function (e) {
 		_("surl").value=e.url;
 	});
+
+	CustomStorage.getVar("fanart",function (e) {
+		_("fanart").checked=e.fanart;
+	});
+
 	_("SaveSettings").onclick=function() {
-		CustomStorage.setVar("url",_("surl").value,function (e) {console.log(e)});
-		CustomStorage.setVar("username",_("suser").value,function (e) {console.log(e)});
-		CustomStorage.setVar("password",_("spass").value,function (e) {console.log(e)});
+		CustomStorage.setVar("url",_("surl").value,function (e) {consoleLog(e)});
+		CustomStorage.setVar("username",_("suser").value,function (e) {consoleLog(e)});
+		CustomStorage.setVar("password",_("spass").value,function (e) {consoleLog(e)});
+		CustomStorage.setVar("fanart",_("fanart").checked,function (e) {consoleLog(e)});
 		loadPreferences();
 		
 	}
@@ -95,4 +110,10 @@ function closeSettings() {
 
 	_("settings").style.display="none";
 	
+}
+
+function consoleLog(a) {
+	if (tracing)
+		console.log(a);
+
 }
