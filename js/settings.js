@@ -4,7 +4,7 @@ var globalPassword="";
 var globalUsername="";
 var CustomStorage;
 var browserApi;
-var FANARTAPIKEY="";
+var FANARTAPIKEY="3b604d4ff932c063108ac40c1a3af2c0";
 
 try {
 	browserApi=chrome.storage;

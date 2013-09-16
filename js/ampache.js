@@ -143,7 +143,9 @@ AMPACHE.prototype.loadArt = function (song_mbid) {
 
 		if (varO[song_mbid]) {
 			_this.loadImage(varO[song_mbid], _("showCanvasImg"));
+			console.log("Loading cache:"+song_mbid);
 		} else {
+			console.log("Loading :"+song_mbid);
 			$.getJSON("http://musicbrainz.org/ws/2/recording/" + song_mbid +
 				"?inc=artist-credits+isrcs+releases&fmt=json",
 				function (dataSong) {
