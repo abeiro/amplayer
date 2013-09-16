@@ -60,12 +60,12 @@ AMPACHE.prototype.loadImageCached = function (resource, ele) {
 	CustomStorage.getVar(cKey, function (varO) {
 		//debugger;
 		if ((varO!=undefined) &&(varO[cKey])) {
-			consoleLog("Using cached version: "+cKey);
+			consoleLog("Using cached version: "+cKey+ " "+resource);
 			ele.src = (varO[cKey]);
 			
 		}
 		else {
-			consoleLog("Using real version: "+cKey);
+			consoleLog("Using real version: "+cKey+ " "+resource);
 			if (browserApi == false)
 				ele.src = resource;
 			else {
@@ -183,10 +183,23 @@ AMPACHE.prototype.loadArt = function (song_mbid) {
 		return;
 	}
 	//http://api.fanart.tv/webservice/artist/3b604d4ff932c063108ac40c1a3af2c0/60a23fda-a440-4ab9-a344-7dfdd2ed341a/JSON/all/1/1/
-	CustomStorage.getVar(song_mbid, function (varO) {
+	CustomStorage.getVar("cache_"+song_mbid, function (varO) {
 
-		if (varO[song_mbid]) {
-			_this.loadImage(varO[song_mbid], _("showCanvasImg"));
+		if (varO["cache_"+song_mbid]) {
+			consoleLog("Loading cache XML api.fanart.tv:"+song_mbid);
+			dataSong=varO["cache_"+song_mbid];
+			a=dataSong[Object.keys(dataSong)[0]].artistbackground;
+					    try {
+							rndIndex=Math.floor((Math.random()*a.length));
+							consoleLog("Fan art images: "+a.length);
+							img=dataSong[Object.keys(dataSong)[0]].artistbackground[rndIndex].url;
+							_this.loadImageCached(img, _("showCanvasImg"));
+						 }catch (imgNotAvailable) {
+							debugger;
+							_this.loadImage("img/noart.jpg", _("showCanvasImg"));
+
+						}
+			//_this.loadImage(varO[song_mbid], _("showCanvasImg"));
 			consoleLog("Loading cache:"+song_mbid);
 		} else {
 			consoleLog("Loading :"+song_mbid);
@@ -199,6 +212,7 @@ AMPACHE.prototype.loadArt = function (song_mbid) {
 					  function (dataSong) {
 						//debugger;
 					    //consoleLog(dataSong[Object.keys(dataSong)[0]].artistbackground);
+						CustomStorage.setVar("cache_"+song_mbid,dataSong);
 						a=dataSong[Object.keys(dataSong)[0]].artistbackground;
 					    try {
 							rndIndex=Math.floor((Math.random()*a.length));
