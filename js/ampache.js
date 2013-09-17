@@ -57,14 +57,23 @@ AMPACHE.prototype.loadImageCached = function (resource, ele) {
 
 	cKey="i_"+CryptoJS.SHA256(resource).toString();
 	var _this = this;
+	var cacheWorked=false;
+
 	CustomStorage.getVar(cKey, function (varO) {
 		//debugger;
 		if ((varO!=undefined) &&(varO[cKey])) {
 			consoleLog("Using cached version: "+cKey+ " "+resource);
 			ele.src = (varO[cKey]);
-			
+			ele.onerror=function (e) {
+				consoleLog("Cache was invalid:"+cKey);
+				CustomStorage.delVar(cKey);
+				_this.loadImageCached (resource, ele);
+			}
+			cacheWorked=true;
 		}
-		else {
+		
+		if (!cacheWorked) {
+		
 			consoleLog("Using real version: "+cKey+ " "+resource);
 			if (browserApi == false)
 				ele.src = resource;
@@ -165,7 +174,7 @@ AMPACHE.prototype.toogleShowMan = function () {
 		_('playerCanvas').style.bottom = "";
 		$('#art').toggle();
 	} else {
-		_('playerCanvas').style.opacity = 0.5;
+		_('playerCanvas').style.opacity = 0.75;
 		_('playerCanvas').style.position="absolute";
 		_('playerCanvas').style.top = "";
 		_('playerCanvas').style.bottom = "0px";
@@ -182,7 +191,6 @@ AMPACHE.prototype.loadArt = function (song_mbid) {
 		consoleLog("User fan art is disabled");
 		return;
 	}
-	//http://api.fanart.tv/webservice/artist/3b604d4ff932c063108ac40c1a3af2c0/60a23fda-a440-4ab9-a344-7dfdd2ed341a/JSON/all/1/1/
 	CustomStorage.getVar("cache_"+song_mbid, function (varO) {
 
 		if (varO["cache_"+song_mbid]) {
@@ -207,11 +215,10 @@ AMPACHE.prototype.loadArt = function (song_mbid) {
 				"?inc=artist-credits+isrcs+releases&fmt=json",
 				function (dataSong) {
 					consoleLog(dataSong.releases);
-					//consoleLog(dataSong["artist-credit"][0].artist.id);});
+					
 					$.getJSON("http://api.fanart.tv/webservice/artist/"+FANARTAPIKEY+"/"+dataSong["artist-credit"][0].artist.id+"/JSON/artistbackground",
 					  function (dataSong) {
-						//debugger;
-					    //consoleLog(dataSong[Object.keys(dataSong)[0]].artistbackground);
+						
 						CustomStorage.setVar("cache_"+song_mbid,dataSong);
 						a=dataSong[Object.keys(dataSong)[0]].artistbackground;
 					    try {

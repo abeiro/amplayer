@@ -29,6 +29,12 @@ if ((!browserApi)) {
 		o[name]=localStorage.getItem(name);
 		callback(o);
 	}
+
+	CustomStorage.getVar=function (name)
+	 {
+		localStorage.removeItem(name);
+		
+	}
 	CustomStorage.mode="WEB";
 
 }
@@ -42,7 +48,11 @@ else {
 	CustomStorage.getVar=function (name,callback) {
 		chrome.storage.local.get(name,callback);
 	}
-
+	
+	CustomStorage.delVar=function (name) {
+		chrome.storage.local.remove(name);
+	}
+	
 	CustomStorage.mode="APP";
 }
 
@@ -113,7 +123,9 @@ function closeSettings() {
 }
 
 function consoleLog(a) {
-	if (tracing)
+
 		console.log(a);
+		//console.log(stack);
+	
 
 }
