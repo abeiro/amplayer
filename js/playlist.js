@@ -13,7 +13,8 @@ If not, see http://www.gnu.org/licenses/.
 /********************************************************************************************/
 function ceventFired(evType) 
 {
-    a = jQuery("div.plButton") for (i = 0;
+    a = jQuery("div.plButton");
+	for (i = 0;
     i < a.length;
     i++) {
         a[i].onclick = function () 

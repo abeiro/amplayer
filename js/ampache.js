@@ -129,7 +129,7 @@ AMPACHE.prototype.localplay = function (songnumber)
     this.loadImageCached(this._songs.root.song[songnumber].art, _("art"));
     document.title = currentSong + " " + this._songs.root.song[songnumber].title + "::" + this._songs.root.song[songnumber].artist;
     changeFavicon(this._songs.root.song[songnumber].art);
-    showPopup(this._songs.root.song[songnumber].art, this._songs.root.song[ songnumber].title, this._songs.root.song[songnumber].artist + " :: " + this._songs .root.song[songnumber].album) this.loadArt(this._songs.root.song[songnumber].mbid);
+    showPopup(this._songs.root.song[songnumber].art, this._songs.root.song[ songnumber].title, this._songs.root.song[songnumber].artist + " :: " + this._songs .root.song[songnumber].album); this.loadArt(this._songs.root.song[songnumber].mbid);
     markSong(currentSong);
 }
 AMPACHE.prototype.nextSong = function () 
