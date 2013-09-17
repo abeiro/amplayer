@@ -174,7 +174,7 @@ AMPACHE.prototype.toogleShowMan = function ()
 AMPACHE.prototype.loadArt = function (song_mbid) 
 {
     _this = this;
-    _this.loadImage("img/noart.jpg", _("showCanvasImg"));
+    _this.loadImage("img/defaultbg.png", _("showCanvasImg"));
     if (!useFanArt) {
         consoleLog("User fan art is disabled");
         return;
@@ -195,7 +195,7 @@ AMPACHE.prototype.loadArt = function (song_mbid)
             }
             catch (imgNotAvailable) {
                 debugger;
-                _this.loadImage("img/noart.jpg", _("showCanvasImg"));
+                _this.loadImage("img/defaultbg.png", _("showCanvasImg"));
             }
             //_this.loadImage(varO[song_mbid], _("showCanvasImg"));
             consoleLog("Loading cache:" + song_mbid);
@@ -220,14 +220,14 @@ AMPACHE.prototype.loadArt = function (song_mbid)
                     }
                     catch (imgNotAvailable) {
                         debugger;
-                        _this.loadImage("img/noart.jpg", _("showCanvasImg"));
+                        _this.loadImage("img/defaultbg.png", _("showCanvasImg"));
                     }
                 });
                 //_this.loadArtCover(dataSong, dataSong.releases.length - 1, song_mbid);
             }).fail(function () 
             {
                 consoleLog("Unable to get info for: " + song_mbid);
-                _this.loadImage("img/noart.jpg", _("showCanvasImg"));
+                _this.loadImage("img/defaultbg.png", _("showCanvasImg"));
             });
         }
     });
@@ -254,7 +254,7 @@ AMPACHE.prototype.loadArtCover = function (dataSong, _counter, song_mbid)
             if (_counter < 0) 
             {
                 consoleLog("Unable to get art");
-                _this.loadImage("img/noart.jpg", _("showCanvasImg"));
+                _this.loadImage("img/defaultbg.png", _("showCanvasImg"));
             }
             else {
                 _this.loadArtCover(dataSong, _counter, song_mbid);
