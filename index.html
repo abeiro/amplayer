@@ -21,12 +21,11 @@
 	<script src="js/xml2array.js"></script>
 	<script src="js/notification.js"></script>
 	<script src="js/sha256.js"></script>
-	<script src="js/file_get_contents.js"></script>
 	<script src="js/cache.js"></script>
 	<script src="js/settings.js"></script>
 	<script src="js/skin.js"></script>
 	<script src="js/playlist.js"></script>
-	<script src="js/ampache.js"></script>
+
 
 
 	<div class="app">
@@ -35,30 +34,39 @@
 				<h1 id="title"></h1>
 				<h2 id="artist"></h2>
 				<h3 id="album"></h3>
-				<img src="" style='position: absolute; top: 0px; right: 0px'
-					id="art" />
+				<img src="" style='position: absolute; top: 0px; right: 0px' id="art" />
 			</div>
 			<hr>
-			<audio controls  id='ampacheplayer'> Your browser
-				does not support the audio tag.
-			</audio>
+			<div style="position:relative">
+				<audio controls  id='ampacheplayer'>
+					Your browser does not support the audio tag.
+				</audio>
+				<br />
+				<select id="playlistselect"></select>
+			</div>
 			<br />
 			<div id="toolbar">
-				<span id="cPrev">PREV</span> :: <span id="cNext">NEXT</span> :: <span
-					id="cRandomPl">RAND PLAYLIST</span> :: <span id="cSettings">SETTINGS</span>
+				<span id="cPrev">PREV</span> :: 
+				<span id="cNext">NEXT</span> ::
+				<span id="cRandomPl">RAND PLAYLIST</span> ::
+				<span id="cSettings">SETTINGS</span> ::
+				<span id="cShow">SHOW</span>
 			</div>
 			<div id="playlist"></div>
+			
 			<div id="settings">
 				<h2>Ampache server settings</h2>
-				URL : <input type="text" id="surl" name="url" value="" size="50"><br />
-				User: <input type="text" id="suser" name="user" value=""><br />
-				Pass: <input type="password" id="spass" name="pass" value=""><br />
+				URL Ampache<br /> <input type="text" id="surl" name="url" value="" size="50"><br />
+				User<br /> <input type="text" id="suser" name="user" value=""><br />
+				Pass<br /> <input type="password" id="spass" name="pass" value=""><br />
+				Use fanart.tv artist images (note this can increase bandwith)<br /> <input type="checkbox" id="fanart" name="fanart" value="fanart"><br />
 				<input type="button" id="SaveSettings" value="Save!">
-
+				<span style='' id="versionLabel">v0.4.0</span>
 			</div>
 		</div>
-
+	<div id="showCanvas"><img id="showCanvasImg"/></div>
 	</div>
-
+<script src="js/ampache.js"></script>
+ 
 </body>
 </html>

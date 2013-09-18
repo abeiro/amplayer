@@ -53,8 +53,8 @@ Get all songs.
 */
 AMPACHE.prototype._getSongs = function (cmd, ret) {
 	var _this = this;
-	_getCachedData("songs", this.URL + "?" + "action=songs" + "&auth=" + this._authkey, function (data) {
-		_this._songs = data;
+	_getCachedData("songs", this.URL + "?" + "action=songs" + "&auth=" + this._authkey, function (edata) {
+		_this._songs = edata;
 		loadPlayList();
 		_this._getPlayLists();
 	});
@@ -65,8 +65,8 @@ Get playlists
 */
 AMPACHE.prototype._getPlayLists = function () {
 	var _this = this;
-	_getCachedDataXML("songs", this.URL + "?" + "action=playlists" + "&auth=" + this._authkey, function (data) {
-		_this._playlists = data.children[0].children;
+	_getCachedDataXML("songs", this.URL + "?" + "action=playlists" + "&auth=" + this._authkey, function (edata) {
+		_this._playlists = edata.children[0].children;
 		
 		pl=new Array();
 		pl[0]="-";
@@ -138,7 +138,7 @@ AMPACHE.prototype.loadImageCached = function (resource, ele) {
 				xhr.responseType = 'blob';
 				xhr.onload = function (e) {
 					ele.src = _this.createObjectURL(this.response);
-					CustomStorage.setVar(cKey, ele.src);
+					CustomStorage.setVar(cKey, ele.src,function (e) {consoleLog(e)});
 				};
 				xhr.send();
 			}
@@ -246,7 +246,7 @@ AMPACHE.prototype.loadArt = function (song_mbid) {
 					consoleLog(dataSong.releases);
 					$.getJSON("http://api.fanart.tv/webservice/artist/" + FANARTAPIKEY + "/" + dataSong["artist-credit"][0].artist.id + "/JSON/artistbackground",
 						function (dataSong) {
-							CustomStorage.setVar("cache_" + song_mbid, dataSong);
+							CustomStorage.setVar("cache_" + song_mbid, dataSong,function (e) {consoleLog(e)});
 							a = dataSong[Object.keys(dataSong)[0]].artistbackground;
 							try {
 								rndIndex = Math.floor((Math.random() * a.length));

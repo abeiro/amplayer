@@ -41,7 +41,7 @@ if ((!browserApi))
         o[name] = localStorage.getItem(name);
         callback(o);
     }
-    CustomStorage.getVar = function (name) 
+    CustomStorage.delVar = function (name) 
     {
         localStorage.removeItem(name);
     }
@@ -124,29 +124,25 @@ function showSettings()
     });
     _("SaveSettings").onclick = function () 
     {
-        CustomStorage.setVar("url", _("surl").value, function (e) 
-        {
-            consoleLog(e)
-        });
-        CustomStorage.setVar("username", _("suser").value, function (e) 
-        {
-            consoleLog(e)
-        });
-        CustomStorage.setVar("password", _("spass").value, function (e) 
-        {
-            consoleLog(e)
-        });
-        CustomStorage.setVar("fanart", _("fanart").checked, function (e) 
-        {
-            consoleLog(e)
-        });
-        loadPreferences();
+        CustomStorage.setVar("url", _("surl").value, function (e)  {
+        
+			CustomStorage.setVar("username", _("suser").value, function (e) {
+                CustomStorage.setVar("password", _("spass").value, function (e) {
+					CustomStorage.setVar("fanart", _("fanart").checked, function (e) {
+							loadPreferences();
+							debugger;
+					});
+				});
+			});
+		});
     }
 }
+
 function closeSettings() 
 {
     _("settings").style.display = "none";
 }
+
 function consoleLog(a) 
 {
     console.log(a);
