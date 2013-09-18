@@ -152,3 +152,12 @@ top: 0px;
 lefT: 0px;
 z-index: -2;
 }
+
+#playlistselect {
+	position: absolute;
+	left: 0px;
+	top: 40px;
+	background-color: white;
+	color: gray;
+	border-radius: 5px;
+}

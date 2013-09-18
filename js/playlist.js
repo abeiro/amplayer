@@ -88,3 +88,20 @@ function shuffleArray(array)
     }
     return array;
 }
+
+function removeAllChilds(cell) {
+    if (cell.hasChildNodes()) {
+        while (cell.childNodes.length >= 1) {
+            cell.removeChild(cell.firstChild);
+        }
+    }
+}
+
+function changeListModel(element,newopts) {
+	removeAllChilds(element);
+	i=0;
+	for (var k in newopts) {
+		element.options[i++] = new Option(newopts[k],k);
+	}
+
+}

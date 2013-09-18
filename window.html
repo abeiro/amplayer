@@ -32,10 +32,12 @@
 				<img src="" style='position: absolute; top: 0px; right: 0px' id="art" />
 			</div>
 			<hr>
-			<audio controls  id='ampacheplayer'>
-
-				Your browser does not support the audio tag.
-			</audio>
+			<div style="position:relative">
+				<audio controls  id='ampacheplayer'>
+					Your browser does not support the audio tag.
+				</audio>
+				<select id="playlistselect"></select>
+			</div>
 			<br />
 			<div id="toolbar">
 				<span id="cPrev">PREV</span> :: 
@@ -53,7 +55,7 @@
 				Pass<br /> <input type="password" id="spass" name="pass" value=""><br />
 				Use fanart.tv artist images (note this can increase bandwith)<br /> <input type="checkbox" id="fanart" name="fanart" value="fanart"><br />
 				<input type="button" id="SaveSettings" value="Save!">
-				<span style='' id="versionLabel">version 0.3.4</span>
+				<span style='' id="versionLabel">v0.4.0</span>
 			</div>
 		</div>
 	<div id="showCanvas"><img id="showCanvasImg"/></div>

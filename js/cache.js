@@ -22,3 +22,15 @@ function _getCachedData(i, durl, ret)
         ret(xml);
     });
 }
+
+
+function _getCachedDataXML(i, durl, ret) 
+{
+    var request = $.ajax({
+        url : durl, type : "GET", dataType : "xml" 
+    });
+    request.done(function (rawdata) 
+    {
+        ret(rawdata);
+    });
+}
