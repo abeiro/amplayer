@@ -111,12 +111,12 @@ AMPACHE.prototype.loadImageCached = function (resource, ele) {
 	var _this = this;
 	var cacheWorked = false;
 	CustomStorage.getVar(cKey, function (varO) {
-		//debugger;
+		console.log("Searching for cached: "+cKey);
 		if ((varO != undefined) && (varO[cKey])) {
-			consoleLog("Using cached version: " + cKey + " " + resource);
+			console.log("Using cached version: " + cKey + " " + resource);
 			ele.src = (varO[cKey]);
 			ele.onerror = function (e) {
-				consoleLog("Cache was invalid:" + cKey);
+				console.log("Cache was invalid:" + cKey);
 				CustomStorage.delVar(cKey);
 				_this.loadImageCached(resource, ele);
 				_this.cacheCounter.miss++;
@@ -128,19 +128,23 @@ AMPACHE.prototype.loadImageCached = function (resource, ele) {
 			cacheWorked = true;
 		}
 		if (!cacheWorked) {
-			consoleLog("Using real version: " + cKey + " " + resource);
+			console.log("Using real version: " + cKey + " " + resource);
 			_this.cacheCounter.miss++;
 			if (browserApi == false) {
 				ele.src = resource;
 			} else {
-				var xhr = new XMLHttpRequest();
-				xhr.open('GET', resource, true);
-				xhr.responseType = 'blob';
-				xhr.onload = function (e) {
-					ele.src = _this.createObjectURL(this.response);
-					CustomStorage.setVar(cKey, ele.src,function (e) {consoleLog(e)});
-				};
-				xhr.send();
+				if (typeof app != 'undefined') // android app // android app
+					ele.src = resource;
+				else {
+					var xhr = new XMLHttpRequest();
+					xhr.open('GET', resource, true);
+					xhr.responseType = 'blob';
+					xhr.onload = function (e) {
+						ele.src = _this.createObjectURL(this.response);
+						CustomStorage.setVar(cKey, ele.src,function (e) {console.log("Storage setted: "+e.cKey)});
+					};
+					xhr.send();
+				}
 			}
 		}
 	});
@@ -152,14 +156,18 @@ AMPACHE.prototype.loadImage = function (resource, ele) {
 	if (browserApi == false) {
 		ele.src = resource;
 	} else {
-		var xhr = new XMLHttpRequest();
-		var _this = this;
-		xhr.open('GET', resource, true);
-		xhr.responseType = 'blob';
-		xhr.onload = function (e) {
-			ele.src = _this.createObjectURL(this.response);
-		};
-		xhr.send();
+		if (typeof app != 'undefined') // android app
+			ele.src = resource;
+		else {
+			var xhr = new XMLHttpRequest();
+			var _this = this;
+			xhr.open('GET', resource, true);
+			xhr.responseType = 'blob';
+			xhr.onload = function (e) {
+				ele.src = _this.createObjectURL(this.response);
+			};
+			xhr.send();
+		}
 	}
 }
 
@@ -178,6 +186,8 @@ AMPACHE.prototype.localplay = function (songnumber) {
 	showPopup(this._songs.root.song[songnumber].art, this._songs.root.song[songnumber].title, this._songs.root.song[songnumber].artist + " :: " + this._songs.root.song[songnumber].album);
 	this.loadArt(this._songs.root.song[songnumber].mbid);
 	markSong(currentSong);
+
+	console.log("Cache: "+conn.cacheCounter.miss+ " misses "+conn.cacheCounter.hit+" hits ");
 }
 AMPACHE.prototype.nextSong = function () {
 	currentSong++;
@@ -220,46 +230,49 @@ AMPACHE.prototype.loadArt = function (song_mbid) {
 	_this = this;
 	_this.loadImage("img/defaultbg.png", _("showCanvasImg"));
 	if (!useFanArt) {
-		consoleLog("User fan art is disabled");
+		console.log("User fan art is disabled");
 		return;
 	}
 	CustomStorage.getVar("cache_" + song_mbid, function (varO) {
 		if (varO["cache_" + song_mbid]) {
-			consoleLog("Loading cache XML api.fanart.tv:" + song_mbid);
+			console.log("Loading cache XML api.fanart.tv:" + song_mbid);
 			dataSong = varO["cache_" + song_mbid];
-			a = dataSong[Object.keys(dataSong)[0]].artistbackground;
 			try {
+				a = dataSong[Object.keys(dataSong)[0]].artistbackground;
 				rndIndex = Math.floor((Math.random() * a.length));
-				consoleLog("Fan art images: " + a.length);
+				console.log("Fan art images: " + a.length);
 				img = dataSong[Object.keys(dataSong)[0]].artistbackground[rndIndex].url;
 				_this.loadImageCached(img, _("showCanvasImg"));
 			} catch (imgNotAvailable) {
-				debugger;
-				_this.loadImage("img/defaultbg.png", _("showCanvasImg"));
+				console.log("XML cache was invalid:" + song_mbid);
+				CustomStorage.delVar("cache_" + song_mbid);
+				_this.loadArt(song_mbid);
+				return;
+				//_this.loadImage("img/defaultbg.png", _("showCanvasImg"));
 			}
 			//_this.loadImage(varO[song_mbid], _("showCanvasImg"));
-			consoleLog("Loading cache:" + song_mbid);
+			
 		} else {
-			consoleLog("Loading :" + song_mbid);
+			console.log("Loading :" + song_mbid);
 			$.getJSON("http://musicbrainz.org/ws/2/recording/" + song_mbid + "?inc=artist-credits+isrcs+releases&fmt=json",
 				function (dataSong) {
-					consoleLog(dataSong.releases);
+					console.log(dataSong.releases);
 					$.getJSON("http://api.fanart.tv/webservice/artist/" + FANARTAPIKEY + "/" + dataSong["artist-credit"][0].artist.id + "/JSON/artistbackground",
 						function (dataSong) {
-							CustomStorage.setVar("cache_" + song_mbid, dataSong,function (e) {consoleLog(e)});
-							a = dataSong[Object.keys(dataSong)[0]].artistbackground;
+							CustomStorage.setVar("cache_" + song_mbid, dataSong,function (e) {console.log(e)});
 							try {
+								a = dataSong[Object.keys(dataSong)[0]].artistbackground;
 								rndIndex = Math.floor((Math.random() * a.length));
 								img = dataSong[Object.keys(dataSong)[0]].artistbackground[rndIndex].url;
 								_this.loadImageCached(img, _("showCanvasImg"));
 							} catch (imgNotAvailable) {
-								debugger;
+								console.log("Image not available for"+song_mbid);
 								_this.loadImage("img/defaultbg.png", _("showCanvasImg"));
 							}
 						});
 					//_this.loadArtCover(dataSong, dataSong.releases.length - 1, song_mbid);
 				}).fail(function () {
-				consoleLog("Unable to get info for: " + song_mbid);
+				console.log("Unable to get info for: " + song_mbid);
 				_this.loadImage("img/defaultbg.png", _("showCanvasImg"));
 			});
 		}
@@ -270,24 +283,24 @@ AMPACHE.prototype.loadArtCover = function (dataSong, _counter, song_mbid) {
 	_counterMax = dataSong.releases.length;
 	try {
 		$.getJSON("http://coverartarchive.org/release/" + dataSong.releases[_counter].id, function (dataAlbum) {
-			consoleLog("Images");
-			consoleLog(dataAlbum);
+			console.log("Images");
+			console.log(dataAlbum);
 			img = dataAlbum.images[0].image;
 			_this.loadImage(img, _("showCanvasImg"));
 			CustomStorage.setVar(song_mbid, img, function (e) {
-				consoleLog(e)
+				console.log(e)
 			});
 		}).fail(function () {
 			_counter--;
 			if (_counter < 0) {
-				consoleLog("Unable to get art");
+				console.log("Unable to get art");
 				_this.loadImage("img/defaultbg.png", _("showCanvasImg"));
 			} else {
 				_this.loadArtCover(dataSong, _counter, song_mbid);
 			}
 		});
 	} catch (idontcare) {
-		consoleLog("Unable to get art." + idontcare);
+		console.log("Unable to get art." + idontcare);
 	}
 }
 
@@ -298,15 +311,26 @@ function markSong(i) {
 		});
 		_("s" + i).parentNode.parentNode.style.textDecoration = "underline";
 	} catch (idontcare) {
-		consoleLog(idontcare);
+		console.log(idontcare);
 	}
 }
 var conn;
 var currentSong;
+
 /* 
 INITIALIZATION 
 */
-$(document).ready(function () {
+
+if (typeof app != 'undefined')
+	document.addEventListener("deviceready", initSystem, false);
+else {
+	$(document).ready(function () {
+		initSystem();
+	});
+}
+
+
+function initSystem() {
 	/* Add event listeners */
 	_("cPrev").onclick = function () {
 		conn.prevSong()
@@ -324,8 +348,8 @@ $(document).ready(function () {
 		_("ampacheplayer").play()
 	});
 	_("ampacheplayer").addEventListener("error", function (e) {
-		consoleLog("Error");
-		consoleLog(e);
+		console.log("Error");
+		console.log(e);
 		_("title").innerHTML = "Error";
 		_("artist").innerHTML = "Connection lost";
 		_("album").innerHTML = "Maybe session has expired. Reload";
@@ -336,36 +360,67 @@ $(document).ready(function () {
 	_("cShow").addEventListener("click", function () {
 		conn.toogleShowMan()
 	});
+
+	_("fullScreenButton").addEventListener("click", function () {
+		if (!this.isFullScreen) {
+			var el = document.documentElement
+			, rfs =
+				el.requestFullScreen
+				|| el.webkitRequestFullScreen
+				|| el.mozRequestFullScreen
+				rfs.call(el);
+	
+				this.isFullScreen=true;s
+		} else {
+			if (document.exitFullscreen) {
+				document.exitFullscreen();
+			}
+			else if (document.webkitCancelFullScreen) {
+				document.webkitCancelFullScreen();
+			}
+			this.isFullScreen=false;
+		}
+		
+	});
+
 	// Load preferences
 	loadPreferences();
 	var supportsOrientationChange = "onorientationchange" in window,
 		orientationEvent = supportsOrientationChange ? "orientationchange" : "resize";
+	
+
 	window.addEventListener(orientationEvent, function () {
 		if (window.innerWidth > window.innerHeight) {
-			_('showCanvasImg').style.width = window.innerWidth - 5 + "px";
+			_('showCanvasImg').style.width = window.innerWidth  + "px";
 		} else {
-			_('showCanvasImg').style.height = window.innerHeight - 5 + "px";
+			_('showCanvasImg').style.height = window.innerHeight + "px";
 		}
 	}, false);
 	window.addEventListener(orientationEvent, function () {
 		_('playlistContent').style.width = (window.innerWidth - 15) + "px";
 		if (window.innerWidth > window.innerHeight) {
-			_('showCanvasImg').style.width = window.innerWidth - 5 + "px";
+			_('showCanvasImg').style.width = window.innerWidth  + "px";
 		} else {
-			_('showCanvasImg').style.height = window.innerHeight - 5 + "px";
+			_('showCanvasImg').style.height = window.innerHeight  + "px";
 		}
 	}, false);
 	window.addEventListener("resize", function () {
 		_('playlistContent').style.width = (window.innerWidth - 15) + "px";
 		if (window.innerWidth > window.innerHeight) {
-			_('showCanvasImg').style.width = window.innerWidth - 5 + "px";
+			_('showCanvasImg').style.height = window.innerHeight  + "px";
+			_('showCanvasImg').style.width = window.innerWidth  + "px";
 		} else {
-			_('showCanvasImg').style.height = window.innerHeight - 5 + "px";
+			_('showCanvasImg').style.height = window.innerHeight  + "px";
+			_('showCanvasImg').style.width = "auto";
 		}
 	}, false);
 	_("title").innerHTML = "AMPlayer";
 	_("artist").innerHTML = "Welcome!";
 	$('#showCanvas').toggle();
+
+	
+	
+
 	if ((browserApi != false)) {
 		try {
 			/* Tracker */
@@ -380,7 +435,7 @@ $(document).ready(function () {
 			tracker.sendAppView('MainView');
 			//currentSong=Math.floor((Math.random()*conn._nsongs)+1)-1;
 		} catch (fucktracker) {
-			consoleLog("Tracker disabled");
+			console.log("Tracker disabled");
 		}
 	}
-});
+}

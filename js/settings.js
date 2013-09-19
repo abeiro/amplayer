@@ -19,18 +19,26 @@ var browserApi;
 var FANARTAPIKEY = "3b604d4ff932c063108ac40c1a3af2c0";
 var useFanArt = false;
 var tracing = true;
+
+
 try {
     browserApi = chrome.storage;
 }
 catch (thisIsNotAChromeApp) {
     browserApi = false;
 }
+
+if (typeof app != 'undefined') // android app // android app
+	browserApi=false;
+
+
 if ((!browserApi)) 
 {
+	console.log("Using localStorage");
     CustomStorage = new Object();
     CustomStorage.setVar = function (vname, vvalue, callback) 
     {
-        localStorage.setItem(vname, vvalue);
+        window.localStorage.setItem(vname, vvalue);
         o = new Object();
         o[vname] = vvalue;
         callback(o);
@@ -38,17 +46,18 @@ if ((!browserApi))
     CustomStorage.getVar = function (name, callback) 
     {
         o = new Object();
-        o[name] = localStorage.getItem(name);
+        o[name] = window.localStorage.getItem(name);
         callback(o);
     }
     CustomStorage.delVar = function (name) 
     {
-        localStorage.removeItem(name);
+        window.localStorage.removeItem(name);
     }
     CustomStorage.mode = "WEB";
 }
 else 
 {
+	console.log("Using chrome.storage.local");
     CustomStorage = new Object();
     CustomStorage.setVar = function (vname, vvalue, callback) 
     {
@@ -103,6 +112,8 @@ function loadPreferences()
         });
     });
 }
+
+
 function showSettings() 
 {
     _("settings").style.display = "block";
@@ -130,7 +141,7 @@ function showSettings()
                 CustomStorage.setVar("password", _("spass").value, function (e) {
 					CustomStorage.setVar("fanart", _("fanart").checked, function (e) {
 							loadPreferences();
-							debugger;
+							
 					});
 				});
 			});

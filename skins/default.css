@@ -5,6 +5,7 @@ body {
     color:white;
     background-color:black;
 	font-size:15px;
+	overflow:hidden;
 }
 
 #title {
@@ -146,13 +147,17 @@ div.plButton:hover {
 
 #showCanvas {
 	min-height:300px;
-display: block;
-position: absolute;
-top: 0px;
-lefT: 0px;
-z-index: -2;
+	min-width:300px;
+	display: block;
+	position: absolute;
+	top: 0px;
+	lefT: 0px;
+	z-index: -2;
+	overflow:hidden;
 }
-
+#showCanvasImg {
+	overflow:hidden;
+}
 #playlistselect {
 	position: absolute;
 	left: 0px;
@@ -160,4 +165,25 @@ z-index: -2;
 	background-color: white;
 	color: gray;
 	border-radius: 5px;
+}
+
+#fullScreenButton {
+	position:absolute;
+	top:0px;
+	right:0px;
+	color:white;
+	cursor:pointer;
+	z-index:2;
+}
+
+html:-moz-full-screen {
+    background: black;
+}
+ 
+html:-webkit-full-screen {
+    background: black;
+}
+ 
+html:fullscreen {
+    background: black;
 }
