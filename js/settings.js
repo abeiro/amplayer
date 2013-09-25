@@ -19,6 +19,7 @@ var CustomStorage;
 var browserApi;
 var FANARTAPIKEY = "3b604d4ff932c063108ac40c1a3af2c0";
 var useFanArt = false;
+var useFeisbuk = false;
 var tracing = true;
 
 
@@ -76,6 +77,9 @@ else
     }
     CustomStorage.mode = "APP";
 }
+
+
+
 function loadPreferences() 
 {
     CustomStorage.getVar("fanart", function (e) 
@@ -91,10 +95,11 @@ function loadPreferences()
     CustomStorage.getVar("feisbuk", function (e) 
     {
         if (e.feisbuk) {
+			useFeisbuk=true;
             InitFB();
         }
         else {
-            // nothing to do here
+            useFeisbuk=false;
         }
     });
 
@@ -148,7 +153,7 @@ function showSettings()
 
 	CustomStorage.getVar("feisbuk", function (e) 
     {
-        _("publishonfacebook").checked = e.fanart;
+        _("publishonfacebook").checked = e.feisbuk;
     });
 
     _("SaveSettings").onclick = function () 
@@ -158,7 +163,7 @@ function showSettings()
 			CustomStorage.setVar("username", _("suser").value, function (e) {
                 CustomStorage.setVar("password", _("spass").value, function (e) {
 					CustomStorage.setVar("fanart", _("fanart").checked, function (e) {
-						CustomStorage.setVar("fanart", _("fanart").publishonfacebook, function (e) {
+						CustomStorage.setVar("feisbuk", _("publishonfacebook").checked, function (e) {
 							loadPreferences();
 					});		
 					});
@@ -177,3 +182,4 @@ function consoleLog(a)
 {
     console.log(a);
 }
+
