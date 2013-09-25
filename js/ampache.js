@@ -106,9 +106,12 @@ AMPACHE.prototype.createObjectURL = function (file) {
 		return null;
 	}
 }
+
+
 AMPACHE.prototype.loadImageCached = function (resource, ele) {
 	cKey = "i_" + CryptoJS.SHA256(resource).toString();
 	var _this = this;
+	//$("#"+ele.id).fadeOut()
 	var cacheWorked = false;
 	CustomStorage.getVar(cKey, function (varO) {
 		console.log("Searching for cached: "+cKey);
@@ -123,7 +126,7 @@ AMPACHE.prototype.loadImageCached = function (resource, ele) {
 			};
 			ele.onload = function (e) {
 				_this.cacheCounter.hit++;
-
+				//$("#"+this.id).fadeIn();
 			}
 			cacheWorked = true;
 		}
@@ -141,7 +144,8 @@ AMPACHE.prototype.loadImageCached = function (resource, ele) {
 					xhr.responseType = 'blob';
 					xhr.onload = function (e) {
 						ele.src = _this.createObjectURL(this.response);
-						CustomStorage.setVar(cKey, ele.src,function (e) {console.log("Storage setted: "+e.cKey)});
+						//ele.onload=function() {$("#"+this.id).fadeIn()}
+						CustomStorage.setVar(cKey, ele.src,function (e) {});
 					};
 					xhr.send();
 				}
@@ -174,17 +178,27 @@ AMPACHE.prototype.loadImage = function (resource, ele) {
 
 
 AMPACHE.prototype.localplay = function (songnumber) {
+	
 	currentSong = songnumber;
+	
 	_("ampacheplayer").src = this._songs.root.song[songnumber].url;
 	_("ampacheplayer").load();
 	_("title").innerHTML = this._songs.root.song[songnumber].title;
 	_("artist").innerHTML = this._songs.root.song[songnumber].artist;
 	_("album").innerHTML = this._songs.root.song[songnumber].album;
+	
+	$("#cLike").get(0).style.backgroundColor="transparent";
+
 	this.loadImageCached(this._songs.root.song[songnumber].art, _("art"));
+	
 	document.title = currentSong + " " + this._songs.root.song[songnumber].title + "::" + this._songs.root.song[songnumber].artist;
+	
 	changeFavicon(this._songs.root.song[songnumber].art);
+	
 	showPopup(this._songs.root.song[songnumber].art, this._songs.root.song[songnumber].title, this._songs.root.song[songnumber].artist + " :: " + this._songs.root.song[songnumber].album);
+	
 	this.loadArt(this._songs.root.song[songnumber].mbid);
+	
 	markSong(currentSong);
 
 	console.log("Cache: "+conn.cacheCounter.miss+ " misses "+conn.cacheCounter.hit+" hits ");
@@ -264,6 +278,7 @@ AMPACHE.prototype.loadArt = function (song_mbid) {
 								a = dataSong[Object.keys(dataSong)[0]].artistbackground;
 								rndIndex = Math.floor((Math.random() * a.length));
 								img = dataSong[Object.keys(dataSong)[0]].artistbackground[rndIndex].url;
+								_this._songs.root.song[currentSong].fanart=dataSong[Object.keys(dataSong)[0]].artistbackground[rndIndex].url;
 								_this.loadImageCached(img, _("showCanvasImg"));
 							} catch (imgNotAvailable) {
 								console.log("Image not available for"+song_mbid);
@@ -357,9 +372,23 @@ function initSystem() {
 	_("cRandomPl").addEventListener("click", function () {
 		randomizePL()
 	});
+	
+	_("cReload").addEventListener("click", function () {
+		loadPreferences();
+	});
+
+	_("cLike").addEventListener("click", function () {
+		publishOnFaceBook();
+	});
+
 	_("cShow").addEventListener("click", function () {
 		conn.toogleShowMan()
 	});
+
+	_("publishonfacebook").addEventListener("click", function () {
+		InitFB();
+	});
+
 
 	_("fullScreenButton").addEventListener("click", function () {
 		if (!this.isFullScreen) {
@@ -396,6 +425,7 @@ function initSystem() {
 			_('showCanvasImg').style.height = window.innerHeight + "px";
 		}
 	}, false);
+
 	window.addEventListener(orientationEvent, function () {
 		_('playlistContent').style.width = (window.innerWidth - 15) + "px";
 		if (window.innerWidth > window.innerHeight) {
@@ -404,6 +434,7 @@ function initSystem() {
 			_('showCanvasImg').style.height = window.innerHeight  + "px";
 		}
 	}, false);
+
 	window.addEventListener("resize", function () {
 		_('playlistContent').style.width = (window.innerWidth - 15) + "px";
 		if (window.innerWidth > window.innerHeight) {
@@ -414,6 +445,8 @@ function initSystem() {
 			_('showCanvasImg').style.width = "auto";
 		}
 	}, false);
+
+
 	_("title").innerHTML = "AMPlayer";
 	_("artist").innerHTML = "Welcome!";
 	$('#showCanvas').toggle();

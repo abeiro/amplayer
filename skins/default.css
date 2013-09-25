@@ -12,7 +12,7 @@ body {
   font-size:27px;
   padding:0px;
   margin:0px;
-  text-shadow: white 0.1em 0.1em 0.2em;
+  text-shadow: black 0.1em 0.1em 0.2em;
   color:white;
 }
 
@@ -20,7 +20,7 @@ body {
   font-size:23px;
   padding:0px;
   margin:0px;
-  text-shadow: white 0.1em 0.1em 0.2em;
+  text-shadow: black 0.1em 0.1em 0.2em;
   color:white;
 }
 
@@ -28,6 +28,8 @@ body {
   font-size:21px;
   padding:0px;
   margin:0px;
+  text-shadow: black 0.1em 0.1em 0.2em;
+  color:white;
 }
 
 #art {
@@ -39,7 +41,7 @@ body {
 #playerCanvas {
    width:100%;
    position:relative;
-   min-height:300px;
+   
 }
 
 #playlist {
@@ -94,7 +96,7 @@ div.plButton:hover {
   color:white;
   border-radius:5px;
   padding:5px;
-  margin-top:20px;	
+  margin-top:0px;	
   
 }
 
@@ -160,8 +162,8 @@ div.plButton:hover {
 }
 #playlistselect {
 	position: absolute;
-	left: 0px;
-	top: 40px;
+	right: 10px;
+	top: 145px;
 	background-color: white;
 	color: gray;
 	border-radius: 5px;
@@ -186,4 +188,11 @@ html:-webkit-full-screen {
  
 html:fullscreen {
     background: black;
+}
+
+#cLike {
+	background-image:url(../img/like.png);
+	background-position:center left;
+	background-repeat: no-repeat;
+	width:24px;
 }
