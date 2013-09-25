@@ -11,6 +11,7 @@ FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more de
 You should have received a copy of the GNU General Public License along with Ampache Player. 
 If not, see http://www.gnu.org/licenses/.
 /********************************************************************************************/
+
 var globalUrl = "";
 var globalPassword = "";
 var globalUsername = "";
@@ -86,6 +87,17 @@ function loadPreferences()
             useFanArt = false;
         }
     });
+
+    CustomStorage.getVar("feisbuk", function (e) 
+    {
+        if (e.feisbuk) {
+            InitFB();
+        }
+        else {
+            // nothing to do here
+        }
+    });
+
     CustomStorage.getVar("username", function (e) 
     {
         if (e.username != null && e.username != "") {
@@ -133,6 +145,12 @@ function showSettings()
     {
         _("fanart").checked = e.fanart;
     });
+
+	CustomStorage.getVar("feisbuk", function (e) 
+    {
+        _("publishonfacebook").checked = e.fanart;
+    });
+
     _("SaveSettings").onclick = function () 
     {
         CustomStorage.setVar("url", _("surl").value, function (e)  {
@@ -140,8 +158,9 @@ function showSettings()
 			CustomStorage.setVar("username", _("suser").value, function (e) {
                 CustomStorage.setVar("password", _("spass").value, function (e) {
 					CustomStorage.setVar("fanart", _("fanart").checked, function (e) {
+						CustomStorage.setVar("fanart", _("fanart").publishonfacebook, function (e) {
 							loadPreferences();
-							
+					});		
 					});
 				});
 			});

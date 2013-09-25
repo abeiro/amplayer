@@ -385,10 +385,7 @@ function initSystem() {
 		conn.toogleShowMan()
 	});
 
-	_("publishonfacebook").addEventListener("click", function () {
-		InitFB();
-	});
-
+	
 
 	_("fullScreenButton").addEventListener("click", function () {
 		if (!this.isFullScreen) {
