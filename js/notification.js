@@ -31,7 +31,10 @@ function showPopup(thumb, title, body)
         window.webkitNotifications.requestPermission();
     }
 }
+
+
 document.head || (document.head = document.getElementsByTagName('head')[0]);
+
 function changeFavicon(src) 
 {
     var link = document.createElement('link'), oldLink = document.getElementById('dynamic-favicon');

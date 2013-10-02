@@ -21,7 +21,7 @@ var FANARTAPIKEY = "3b604d4ff932c063108ac40c1a3af2c0";
 var useFanArt = false;
 var useFeisbuk = false;
 var tracing = true;
-
+var windowFeisbuk;
 
 try {
     browserApi = chrome.storage;
@@ -55,6 +55,12 @@ if ((!browserApi))
     {
         window.localStorage.removeItem(name);
     }
+	CustomStorage.clear=function() {
+		window.localStorage.clear();
+	}
+	CustomStorage.showUse=function() {
+		console.log("unknown");
+	}
     CustomStorage.mode = "WEB";
 }
 else 
@@ -75,6 +81,12 @@ else
     {
         chrome.storage.local.remove(name);
     }
+	CustomStorage.clear=function() {
+		 chrome.storage.local.clear();
+	}
+	CustomStorage.showUse=function() {
+		 chrome.storage.local.getBytesInUse(null,function (e) {console.log(e)})
+	}
     CustomStorage.mode = "APP";
 }
 
@@ -94,7 +106,7 @@ function loadPreferences()
 
     CustomStorage.getVar("feisbuk", function (e) 
     {
-        if (e.feisbuk) {
+        if (e.feisbuk=="true") {
 			useFeisbuk=true;
             InitFB();
         }
@@ -163,13 +175,33 @@ function showSettings()
 			CustomStorage.setVar("username", _("suser").value, function (e) {
                 CustomStorage.setVar("password", _("spass").value, function (e) {
 					CustomStorage.setVar("fanart", _("fanart").checked, function (e) {
-						CustomStorage.setVar("feisbuk", _("publishonfacebook").checked, function (e) {
+						CustomStorage.setVar("feisbuk", _("publishonfacebook").checked=="true", function (e) {
 							loadPreferences();
 					});		
 					});
 				});
 			});
 		});
+    }
+	_("ClearCache").onclick = function () 
+    {
+		CustomStorage.clear();
+        CustomStorage.setVar("url", _("surl").value, function (e)  {
+        
+			CustomStorage.setVar("username", _("suser").value, function (e) {
+                CustomStorage.setVar("password", _("spass").value, function (e) {
+					CustomStorage.setVar("fanart", _("fanart").checked, function (e) {
+						CustomStorage.setVar("feisbuk", _("publishonfacebook").checked=="true", function (e) {
+							closeSettings();
+					});		
+					});
+				});
+			});
+		});
+    }
+	_("CloseButton").onclick = function () 
+    {
+	closeSettings();
     }
 }
 

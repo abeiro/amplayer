@@ -61,17 +61,30 @@ AMPACHE.prototype._getSongs = function (cmd, ret) {
 }
 
 /*** 
+Ping (to keep connection alive)
+
+*/
+AMPACHE.prototype._ping = function () {
+	var _this = this;
+	
+	$.get(this.URL + "?" + "action=ping" + "&auth=" + this._authkey+"&user="+this._user, function (edata) {
+		console.log(edata.childNodes[0].childNodes[3].childNodes[0].textContent);
+	},"xml");
+}
+
+/*** 
 Get playlists
 */
 AMPACHE.prototype._getPlayLists = function () {
 	var _this = this;
 	_getCachedDataXML("songs", this.URL + "?" + "action=playlists" + "&auth=" + this._authkey, function (edata) {
-		_this._playlists = edata.children[0].children;
+		_this._playlists = edata.childNodes[0].childNodes;
 		
 		pl=new Array();
 		pl[0]="-";
 		for (i=0;i<_this._playlists.length;i++) {
-			pl[_this._playlists[i].attributes[0].value]="List: "+_this._playlists[i].children[0].textContent;
+			if (_this._playlists[i].nodeName!="#text")
+				pl[_this._playlists[i].getAttribute("id")]="List: "+_this._playlists[i].childNodes[1].childNodes[0].textContent;
 
 		}
 		changeListModel(_('playlistselect'),pl);
@@ -244,7 +257,7 @@ AMPACHE.prototype.loadArt = function (song_mbid) {
 	_this = this;
 	_this.loadImage("img/defaultbg.png", _("showCanvasImg"));
 	if (!useFanArt) {
-		console.log("User fan art is disabled");
+		console.log("Use fan art is disabled");
 		return;
 	}
 	CustomStorage.getVar("cache_" + song_mbid, function (varO) {
@@ -293,6 +306,8 @@ AMPACHE.prototype.loadArt = function (song_mbid) {
 		}
 	});
 }
+
+/*
 AMPACHE.prototype.loadArtCover = function (dataSong, _counter, song_mbid) {
 	_this = this;
 	_counterMax = dataSong.releases.length;
@@ -318,6 +333,8 @@ AMPACHE.prototype.loadArtCover = function (dataSong, _counter, song_mbid) {
 		console.log("Unable to get art." + idontcare);
 	}
 }
+
+*/
 
 function markSong(i) {
 	try {
@@ -448,8 +465,7 @@ function initSystem() {
 	_("artist").innerHTML = "Welcome!";
 	$('#showCanvas').toggle();
 
-	
-	
+	window.setInterval(function() {conn._ping()},1000*600);
 
 	if ((browserApi != false)) {
 		try {

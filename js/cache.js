@@ -27,10 +27,17 @@ function _getCachedData(i, durl, ret)
 function _getCachedDataXML(i, durl, ret) 
 {
     var request = $.ajax({
-        url : durl, type : "GET", dataType : "xml" 
+        url : durl, type : "GET", dataType : "text" ,
+		error:function(XMLHttpRequest,textStatus, errorThrown) {     
+			alert("Error status :"+textStatus);  
+			alert("Error type :"+errorThrown);  
+			alert("Error message :"+XMLHttpRequest.responseXML);  
+		}
     });
     request.done(function (rawdata) 
     {
-        ret(rawdata);
+		xmldata=$.parseXML( rawdata )
+		console.log(xmldata);
+        ret(xmldata);
     });
 }

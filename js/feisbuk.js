@@ -12,6 +12,9 @@ You should have received a copy of the GNU General Public License along with Amp
 If not, see http://www.gnu.org/licenses/.
 /********************************************************************************************/
 
+
+
+
 function publishOnFaceBook() {
 
 	if (ACCESS_TOKEN==null)
@@ -33,7 +36,7 @@ function publishOnFaceBook() {
 
 		$.post( "https://graph.facebook.com/"+USER_PAGE+"/feed", 
 			{ 
-			'message':"Just listened "+a.title+" ("+a.artist+")  via AMPache Player",
+			'message':"Just listened "+a.title+" ("+a.artist+")  via Ampache Player",
 			'picture':picture,
 			'link':link,
 			'access_token':ACCESS_TOKEN
@@ -55,23 +58,78 @@ function publishOnFaceBook() {
 
 function InitFB() {
 
-	client_id='576853419017449';	MY_FACEBOOK_OAUTH_URL='https://www.facebook.com/dialog/oauth?client_id='+client_id+'&redirect_uri=https://'+chrome.runtime.id+'.chromiumapp.org/bast&scope=publish_actions,publish_stream&response_type=token';
-	console.log(MY_FACEBOOK_OAUTH_URL);
-	chrome.identity.launchWebAuthFlow({
-		url: MY_FACEBOOK_OAUTH_URL,
-		interactive: true
+	client_id='576853419017449';
 
-	}, function(e){ 
-		console.log(e);
-		ACCESS_TOKEN=e.split("#")[1].split("=")[1].split("&")[0];	
-		$.get( "https://graph.facebook.com/debug_token?input_token="+ACCESS_TOKEN+"&access_token="+ACCESS_TOKEN) 
-		.done(function(fdata) {
-				console.log(fdata.data);
-				USER_PAGE=fdata.data.user_id;
-			})
+	if (browserApi) {
+		try {
+		MY_FACEBOOK_OAUTH_URL='https://www.facebook.com/dialog/oauth?client_id='+client_id+'&redirect_uri=https://'+chrome.runtime.id+'.chromiumapp.org/bast&scope=publish_actions,publish_stream&response_type=token';
+		console.log(MY_FACEBOOK_OAUTH_URL);
+		chrome.identity.launchWebAuthFlow({
+			url: MY_FACEBOOK_OAUTH_URL,
+			interactive: true
 
+		}, function(e){ 
+			console.log(e);
+			ACCESS_TOKEN=e.split("#")[1].split("=")[1].split("&")[0];	
+			$.get( "https://graph.facebook.com/debug_token?input_token="+ACCESS_TOKEN+"&access_token="+ACCESS_TOKEN) 
+			.done(function(fdata) {
+					console.log(fdata.data);
+					USER_PAGE=fdata.data.user_id;
+				})
+
+			}
+		);
+		} catch (feisbukunava) {
+			console.log("Not a chrome app, so no facebook (atm)");
 		}
-	);
+	} else {
+		MY_FACEBOOK_OAUTH_URL='https://www.facebook.com/dialog/oauth?client_id='+client_id+'&redirect_uri=https://www.facebook.com/connect/login_success.html&scope=publish_actions,publish_stream&response_type=token';
+		console.log(MY_FACEBOOK_OAUTH_URL);
+		//window.location.replace(MY_FACEBOOK_OAUTH_URL);
+					
+		
+		try {
+
+			/*var jqxhr = $.getJSON( MY_FACEBOOK_OAUTH_URL, function() {
+				console.log( "success" );
+			})
+			.done(function(xhr) {
+				console.log( "second success" + xhr );
+			})
+			.fail(function(xhr) {
+				console.log( "error" + xhr );
+			})
+			.always(function(xhr) {
+				console.log( "complete" + xhr );
+			});*/
+
+			$.ajax({
+				type: "GET",
+				url: MY_FACEBOOK_OAUTH_URL,
+				cache: false,
+				dataType: 'JSONP',
+				beforeSend: function(xhr){
+					xhr.setRequestHeader('X-Test-Header', 'test-value');
+						
+				},
+			}).done ( function(xhr, status, error) {
+					debugger;
+					console.log("Error:"+xhr);
+					
+				}
+			).fail(function(xhr) {
+
+						console.log(xhr);
+				}
+
+			);
+		
+		}
+		catch (Error) {
+			alert(Error);
+		}
+		//debugger;
+	}
 }
 
 

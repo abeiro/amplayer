@@ -15,19 +15,21 @@
 	<script type="text/javascript">
 		app.initialize();
 	</script>
-	<script src="js/jquery-1.9.1.min.js"></script>
+	<script src="js/jquery-1.10.2.min.js"></script>
 	<script type="text/javascript" language="javascript"
 		src="js/jquery.dataTables.js"></script>
 	<script src="js/xml2array.js"></script>
 	<script src="js/notification.js"></script>
 	<script src="js/sha256.js"></script>
 	<script src="js/cache.js"></script>
+	<script src="js/feisbuk.js"></script>  
 	<script src="js/settings.js"></script>
 	<script src="js/skin.js"></script>
 	<script src="js/playlist.js"></script>
 
 
 
+	  
 	<div class="app">
 		<div id="playerCanvas">
 			<div id="subHeader">
@@ -41,32 +43,45 @@
 				<audio controls  id='ampacheplayer'>
 					Your browser does not support the audio tag.
 				</audio>
-				<br />
-				<select id="playlistselect"></select>
 			</div>
-			<br />
+			<select id="playlistselect"></select>
+			
 			<div id="toolbar">
 				<span id="cPrev">PREV</span> :: 
 				<span id="cNext">NEXT</span> ::
 				<span id="cRandomPl">RAND PLAYLIST</span> ::
 				<span id="cSettings">SETTINGS</span> ::
+				<span id="cReload">RELOAD</span> ::
+				<span id="cLike">&nbsp;&nbsp;&nbsp;&nbsp;</span> ::
 				<span id="cShow">SHOW</span>
 			</div>
 			<div id="playlist"></div>
 			
-			<div id="settings">
+		
+		</div>
+		<div id="showCanvas">
+			<img id="showCanvasImg"/>
+		</div>
+		<div id="fullScreenButton" title="Toggle Fullscreen"><img src="images/fogull.png" /></div>
+
+
+		<div id="settings">
 				<h2>Ampache server settings</h2>
 				URL Ampache<br /> <input type="text" id="surl" name="url" value="" size="50"><br />
 				User<br /> <input type="text" id="suser" name="user" value=""><br />
 				Pass<br /> <input type="password" id="spass" name="pass" value=""><br />
-				Use fanart.tv artist images (note this can increase bandwith)<br /> <input type="checkbox" id="fanart" name="fanart" value="fanart"><br />
+				Use fanart.tv artist images (note this can increase bandwith) <input type="checkbox" id="fanart" name="fanart" value="fanart"><br />
+				Publish 'likes' on facebook <input type="checkbox" id="publishonfacebook" name="publishonfacebook" value="publishonfacebook"><br />
 				<input type="button" id="SaveSettings" value="Save!">
-				<span style='' id="versionLabel">v0.4.0</span>
-			</div>
+				<span style='' id="versionLabel">v0.4.5</span>
 		</div>
-		<div id="showCanvas" style="width:100%;height:100%"><img id="showCanvasImg" src="img/defaultbg.png" style="width:100%;height:100%"/></div>
-		<div id="fullScreenButton" title="Toggle Fullscreen"><img src="images/fogull.png" /></div>
+
+
 	</div>
+	
+
+
+
 
 <script src="js/ampache.js"></script>
  
