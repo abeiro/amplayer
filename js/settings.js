@@ -84,9 +84,14 @@ else
 	CustomStorage.clear=function() {
 		 chrome.storage.local.clear();
 	}
-	CustomStorage.showUse=function() {
-		 chrome.storage.local.getBytesInUse(null,function (e) {console.log(e)})
-	}
+	CustomStorage.showUse=function(cvar) {
+		if(typeof cvar === "undefined") 
+			chrome.storage.local.getBytesInUse(null,function (e) {console.log("Total storage bytes:"+e)})
+        else
+			chrome.storage.local.getBytesInUse(cvar,function (e) {console.log("Storage bytes for "+cvar+":"+e)})
+    }	
+		 
+	
     CustomStorage.mode = "APP";
 }
 

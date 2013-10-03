@@ -68,10 +68,23 @@ body {
 
 }
 
-.dataTables_paginate  a  {
-  
-  text-shadow:  -1px 0 lightgray, 0 1px lightgray,
-	  1px 0 lightgray, 0 -1px lightgray;
+
+#playlistContent_paginate a.paginate_enabled_previous  {
+	color:white !important;
+
+}
+
+#playlistContent_paginate a.paginate_disabled_previous  {
+	color:gray !important;
+
+}
+#playlistContent_paginate a.paginate_enabled_next  {
+	color:white !important;
+
+}
+#playlistContent_paginate a.paginate_disabled_next  {
+	color:gray !important;
+
 }
 
 

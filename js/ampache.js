@@ -106,6 +106,9 @@ AMPACHE.prototype._loadPlayList = function (plid) {
 	var _this = this;
 	_getCachedData("songs", this.URL + "?" + "action=playlist_songs&filter="+plid + "&auth=" + this._authkey, function (data) {
 		_this._songs = data;
+		c=0;
+		for (i in _this._songs.root.song) c++;
+		_this._nsongs =c;
 		loadPlayList();
 	});
 }
@@ -122,14 +125,14 @@ AMPACHE.prototype.createObjectURL = function (file) {
 
 
 AMPACHE.prototype.loadImageCached = function (resource, ele) {
-	cKey = "i_" + CryptoJS.SHA256(resource).toString();
+	var cKey = "i_" + CryptoJS.SHA256(resource).toString();
 	var _this = this;
-	//$("#"+ele.id).fadeOut()
+	$("#"+ele.id).hide()
 	var cacheWorked = false;
 	CustomStorage.getVar(cKey, function (varO) {
 		console.log("Searching for cached: "+cKey);
 		if ((varO != undefined) && (varO[cKey])) {
-			console.log("Using cached version: " + cKey + " " + resource);
+			console.log("Using cached version: " +ele.id+":"+ cKey + " " + resource);
 			ele.src = (varO[cKey]);
 			ele.onerror = function (e) {
 				console.log("Cache was invalid:" + cKey);
@@ -139,7 +142,7 @@ AMPACHE.prototype.loadImageCached = function (resource, ele) {
 			};
 			ele.onload = function (e) {
 				_this.cacheCounter.hit++;
-				//$("#"+this.id).fadeIn();
+				$("#"+this.id).fadeIn();
 			}
 			cacheWorked = true;
 		}
@@ -157,8 +160,14 @@ AMPACHE.prototype.loadImageCached = function (resource, ele) {
 					xhr.responseType = 'blob';
 					xhr.onload = function (e) {
 						ele.src = _this.createObjectURL(this.response);
-						//ele.onload=function() {$("#"+this.id).fadeIn()}
-						CustomStorage.setVar(cKey, ele.src,function (e) {});
+
+						ele.onload=function() {$("#"+this.id).fadeIn();}
+
+						CustomStorage.setVar(cKey, ele.src,function (e) {
+							console.log("Caching for:"+ele.id+" "+cKey);
+							CustomStorage.showUse(cKey);
+							
+						});
 					};
 					xhr.send();
 				}
@@ -195,6 +204,8 @@ AMPACHE.prototype.localplay = function (songnumber) {
 	currentSong = songnumber;
 	
 	_("ampacheplayer").src = this._songs.root.song[songnumber].url;
+	console.log("Checking if browser can play this:"+_("ampacheplayer").canPlayType());
+
 	_("ampacheplayer").load();
 	_("title").innerHTML = this._songs.root.song[songnumber].title;
 	_("artist").innerHTML = this._songs.root.song[songnumber].artist;
@@ -223,6 +234,8 @@ AMPACHE.prototype.nextSong = function () {
 	}
 	conn.localplay(currentSong);
 }
+
+
 AMPACHE.prototype.prevSong = function () {
 	currentSong--;
 	if (currentSong <= -1) {
@@ -230,6 +243,8 @@ AMPACHE.prototype.prevSong = function () {
 	}
 	conn.localplay(currentSong);
 }
+
+
 AMPACHE.prototype.toogleShowMan = function () {
 	$('#playlist').toggle();
 	$('#playlistselect').toggle();
@@ -242,13 +257,17 @@ AMPACHE.prototype.toogleShowMan = function () {
 		_('playerCanvas').style.top = "0px";
 		_('playerCanvas').style.position = "relative";
 		_('playerCanvas').style.bottom = "";
-		$('#art').toggle();
+		_('art').style.left=""
+		$('#art').show();
+
 	} else {
 		_('playerCanvas').style.opacity = 0.75;
 		_('playerCanvas').style.position = "absolute";
 		_('playerCanvas').style.top = "";
 		_('playerCanvas').style.bottom = "0px";
-		$('#art').toggle();
+		$('#art').hide();
+		_('art').style.left="10000px"
+		
 	}
 }
 
@@ -266,10 +285,20 @@ AMPACHE.prototype.loadArt = function (song_mbid) {
 			dataSong = varO["cache_" + song_mbid];
 			try {
 				a = dataSong[Object.keys(dataSong)[0]].artistbackground;
-				rndIndex = Math.floor((Math.random() * a.length));
+				if (a.length>1) {
+					rndIndex = Math.floor((Math.random() * a.length));
+					while (_("showCanvasImg").realsource==dataSong[Object.keys(dataSong)[0]].artistbackground[rndIndex].url) {
+						console.log("Same fanart, retrying"+_("showCanvasImg"));
+						rndIndex = Math.floor((Math.random() * a.length));
+					}
+				} else
+					rndIndex=0;
+
 				console.log("Fan art images: " + a.length);
 				img = dataSong[Object.keys(dataSong)[0]].artistbackground[rndIndex].url;
+				_("showCanvasImg").realsource=img;
 				_this.loadImageCached(img, _("showCanvasImg"));
+
 			} catch (imgNotAvailable) {
 				console.log("XML cache was invalid:" + song_mbid);
 				CustomStorage.delVar("cache_" + song_mbid);
@@ -289,7 +318,16 @@ AMPACHE.prototype.loadArt = function (song_mbid) {
 							CustomStorage.setVar("cache_" + song_mbid, dataSong,function (e) {console.log(e)});
 							try {
 								a = dataSong[Object.keys(dataSong)[0]].artistbackground;
-								rndIndex = Math.floor((Math.random() * a.length));
+								if (a.length>1) {
+									rndIndex = Math.floor((Math.random() * a.length));
+									while (_("showCanvasImg").realsource==dataSong[Object.keys(dataSong)[0]].artistbackground[rndIndex].url) {
+										console.log("Same faart, retrying"+_("showCanvasImg").realsource);
+										rndIndex = Math.floor((Math.random() * a.length));
+									}
+								} else
+									rndIndex=0;
+								
+								_("showCanvasImg").realsource=dataSong[Object.keys(dataSong)[0]].artistbackground[rndIndex].url;
 								img = dataSong[Object.keys(dataSong)[0]].artistbackground[rndIndex].url;
 								_this._songs.root.song[currentSong].fanart=dataSong[Object.keys(dataSong)[0]].artistbackground[rndIndex].url;
 								_this.loadImageCached(img, _("showCanvasImg"));
@@ -307,34 +345,6 @@ AMPACHE.prototype.loadArt = function (song_mbid) {
 	});
 }
 
-/*
-AMPACHE.prototype.loadArtCover = function (dataSong, _counter, song_mbid) {
-	_this = this;
-	_counterMax = dataSong.releases.length;
-	try {
-		$.getJSON("http://coverartarchive.org/release/" + dataSong.releases[_counter].id, function (dataAlbum) {
-			console.log("Images");
-			console.log(dataAlbum);
-			img = dataAlbum.images[0].image;
-			_this.loadImage(img, _("showCanvasImg"));
-			CustomStorage.setVar(song_mbid, img, function (e) {
-				console.log(e)
-			});
-		}).fail(function () {
-			_counter--;
-			if (_counter < 0) {
-				console.log("Unable to get art");
-				_this.loadImage("img/defaultbg.png", _("showCanvasImg"));
-			} else {
-				_this.loadArtCover(dataSong, _counter, song_mbid);
-			}
-		});
-	} catch (idontcare) {
-		console.log("Unable to get art." + idontcare);
-	}
-}
-
-*/
 
 function markSong(i) {
 	try {
@@ -376,9 +386,11 @@ function initSystem() {
 	_("ampacheplayer").addEventListener("ended", function () {
 		conn.nextSong()
 	});
+
 	_("ampacheplayer").addEventListener("canplay", function () {
 		_("ampacheplayer").play()
 	});
+
 	_("ampacheplayer").addEventListener("error", function (e) {
 		console.log("Error");
 		console.log(e);
