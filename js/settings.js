@@ -111,7 +111,7 @@ function loadPreferences()
 
     CustomStorage.getVar("feisbuk", function (e) 
     {
-        if (e.feisbuk=="true") {
+        if (e.feisbuk==true) {
 			useFeisbuk=true;
             InitFB();
         }
@@ -180,7 +180,7 @@ function showSettings()
 			CustomStorage.setVar("username", _("suser").value, function (e) {
                 CustomStorage.setVar("password", _("spass").value, function (e) {
 					CustomStorage.setVar("fanart", _("fanart").checked, function (e) {
-						CustomStorage.setVar("feisbuk", _("publishonfacebook").checked=="true", function (e) {
+						CustomStorage.setVar("feisbuk", _("publishonfacebook").checked==true, function (e) {
 							loadPreferences();
 					});		
 					});
