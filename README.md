@@ -12,10 +12,13 @@ As is written in javascript and HTML5 can work also as a Web App. Just upload it
 your web server and open window.html in your browser.
 
 
-It uses:
+Uses:
 
 * HTML5 audio tag capabilities
 * HTML5 localStorage (chrome.storage.local if used as an Chrome packaged APP)
+* Fan art from http://fanart.tv
+* Musicbrainz info. http://musicbrainz.org/
+* Publish song likes on facebook
 
 
 Using it
@@ -29,7 +32,7 @@ LICENSING
 
 3rd party Software
 
-* jQuery. (1.9.1) 		MIT 			http://github.com/jquery/jquery/blob/master/MIT-LICENSE.txt
+* jQuery. (1.10) 		MIT 			http://github.com/jquery/jquery/blob/master/MIT-LICENSE.txt
 * jQuery dataTables.  	BSD-3/GPL-2  	http://datatables.net/license_gpl2   http://datatables.net/license_bsd
 * CryptoJS v3.1.2		BSD-3	 		http://code.google.com/p/crypto-js/wiki/License 
 * xml2array.js			BSD-3 			http://www.openjs.com/scripts/xml_parser/
