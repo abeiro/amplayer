@@ -22,7 +22,7 @@ Uses:
 * Fan art from http://fanart.tv
 * Musicbrainz info. http://musicbrainz.org/
 * Publish song "likes" on Facebook
-
+* Added initial support for lyrics (http://lyrics.wikia.com)
 
 
 Using it
