@@ -225,8 +225,17 @@ AMPACHE.prototype.localplay = function (songnumber) {
 	
 	markSong(currentSong);
 
+	if (typeof useLyrics!='undefined')
+		if (useLyrics) {
+			$("#lyricsCanvas").hide()
+			extractLyrics();
+		}
+
 	console.log("Cache: "+conn.cacheCounter.miss+ " misses "+conn.cacheCounter.hit+" hits ");
 }
+
+
+
 AMPACHE.prototype.nextSong = function () {
 	currentSong++;
 	if (currentSong >= this._nsongs) {
@@ -392,8 +401,17 @@ function initSystem() {
 	});
 
 	_("ampacheplayer").addEventListener("error", function (e) {
-		console.log("Error");
-		console.log(e);
+		console.log("Error: "+e);
+		err=e.target.error;;
+		if (err.code==err.MEDIA_ERR_ABORTED)
+			console.log("MEDIA_ERR_ABORTED");
+		if (err.code==err.MEDIA_ERR_NETWORK)
+			console.log("MEDIA_ERR_NETWORK");
+		if (err.code==err.MEDIA_ERR_DECODE)
+			console.log("MEDIA_ERR_DECODE");
+		if (err.code==err.MEDIA_ERR_SRC_NOT_SUPPORTED)
+			console.log("MEDIA_ERR_SRC_NOT_SUPPORTED: "+e.target.src);
+
 		_("title").innerHTML = "Error";
 		_("artist").innerHTML = "Connection lost";
 		_("album").innerHTML = "Maybe session has expired. Reload";
@@ -414,6 +432,12 @@ function initSystem() {
 		conn.toogleShowMan()
 	});
 
+	_("cLyrics").addEventListener("click", function () {
+		
+		_("lyricsCanvas").style.right="";
+		_("lyricsCanvas").style.left=(window.innerWidth-450)+"px";
+		$("#lyricsCanvas").toggle()
+	});
 	
 
 	_("fullScreenButton").addEventListener("click", function () {
@@ -452,6 +476,8 @@ function initSystem() {
 		}
 	}, false);
 
+
+
 	window.addEventListener(orientationEvent, function () {
 		_('playlistContent').style.width = (window.innerWidth - 15) + "px";
 		if (window.innerWidth > window.innerHeight) {
@@ -470,6 +496,8 @@ function initSystem() {
 			_('showCanvasImg').style.height = window.innerHeight  + "px";
 			_('showCanvasImg').style.width = "auto";
 		}
+		_("lyricsCanvas").style.right="";
+		_("lyricsCanvas").style.left=(window.innerWidth-450)+"px";
 	}, false);
 
 

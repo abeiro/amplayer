@@ -16,9 +16,13 @@ Uses:
 
 * HTML5 audio tag capabilities
 * HTML5 localStorage (chrome.storage.local if used as an Chrome packaged APP)
+
+* Playlists from your Ampache Server
+* CD Covers from your Ampache Server
 * Fan art from http://fanart.tv
 * Musicbrainz info. http://musicbrainz.org/
-* Publish song likes on facebook
+* Publish song "likes" on Facebook
+
 
 
 Using it

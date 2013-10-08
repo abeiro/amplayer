@@ -120,6 +120,18 @@ function loadPreferences()
         }
     });
 
+   CustomStorage.getVar("useLyrics", function (e) 
+    {
+        if (e.useLyrics==true) {
+			useLyrics=true;
+            
+        }
+        else {
+            useLyrics=false;
+        }
+    });
+
+
     CustomStorage.getVar("username", function (e) 
     {
         if (e.username != null && e.username != "") {
@@ -173,16 +185,23 @@ function showSettings()
         _("publishonfacebook").checked = e.feisbuk;
     });
 
+	CustomStorage.getVar("useLyrics", function (e) 
+    {
+        _("useLyrics").checked = e.useLyrics;
+    });
+
+
     _("SaveSettings").onclick = function () 
     {
         CustomStorage.setVar("url", _("surl").value, function (e)  {
-        
 			CustomStorage.setVar("username", _("suser").value, function (e) {
                 CustomStorage.setVar("password", _("spass").value, function (e) {
 					CustomStorage.setVar("fanart", _("fanart").checked, function (e) {
 						CustomStorage.setVar("feisbuk", _("publishonfacebook").checked==true, function (e) {
-							loadPreferences();
-					});		
+							CustomStorage.setVar("useLyrics", _("useLyrics").checked==true, function (e) {
+								loadPreferences();
+							});
+						});		
 					});
 				});
 			});
