@@ -147,7 +147,7 @@ div.plButton:hover {
 
 #settings input[type=checkbox],#settings input{
 	border:1px solid black;
-
+	background-color:gray;
 }
 
 #settings #versionLabel {

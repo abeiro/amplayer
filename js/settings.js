@@ -22,6 +22,7 @@ var useFanArt = false;
 var useFeisbuk = false;
 var tracing = true;
 var windowFeisbuk;
+var gUseLyrics = false;
 
 try {
     browserApi = chrome.storage;
@@ -120,14 +121,14 @@ function loadPreferences()
         }
     });
 
-   CustomStorage.getVar("useLyrics", function (e) 
+   CustomStorage.getVar("uselyrics", function (e) 
     {
-        if (e.useLyrics==true) {
-			useLyrics=true;
+        if (e.uselyrics==true) {
+			gUseLyrics=true;
             
         }
         else {
-            useLyrics=false;
+            gUseLyrics=false;
         }
     });
 
@@ -185,9 +186,9 @@ function showSettings()
         _("publishonfacebook").checked = e.feisbuk;
     });
 
-	CustomStorage.getVar("useLyrics", function (e) 
+	CustomStorage.getVar("uselyrics", function (e) 
     {
-        _("useLyrics").checked = e.useLyrics;
+        _("uselyrics").checked = e.uselyrics;
     });
 
 
@@ -198,7 +199,7 @@ function showSettings()
                 CustomStorage.setVar("password", _("spass").value, function (e) {
 					CustomStorage.setVar("fanart", _("fanart").checked, function (e) {
 						CustomStorage.setVar("feisbuk", _("publishonfacebook").checked==true, function (e) {
-							CustomStorage.setVar("useLyrics", _("useLyrics").checked==true, function (e) {
+							CustomStorage.setVar("uselyrics", _("uselyrics").checked==true, function (e) {
 								loadPreferences();
 							});
 						});		

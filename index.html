@@ -26,7 +26,7 @@
 	<script src="js/settings.js"></script>
 	<script src="js/skin.js"></script>
 	<script src="js/playlist.js"></script>
-
+	<script src="js/lyrics.js"></script>
 
 
 	  
@@ -53,13 +53,15 @@
 				<span id="cSettings">SETTINGS</span> ::
 				<span id="cReload">RELOAD</span> ::
 				<span id="cLike">&nbsp;&nbsp;&nbsp;&nbsp;</span> ::
-				<span id="cShow">SHOW</span>
+				<span id="cShow">SHOW</span> :: 
+				<span id="cLyrics">LYR</span>
 			</div>
 			<div id="playlist"></div>
 			
 		
 		</div>
 		<div id="showCanvas">
+			<div id="lyricsCanvas">Configure lyrics in settings</div>
 			<img id="showCanvasImg"/>
 		</div>
 		<div id="fullScreenButton" title="Toggle Fullscreen"><img src="images/fogull.png" /></div>
@@ -71,11 +73,14 @@
 				User<br /> <input type="text" id="suser" name="user" value=""><br />
 				Pass<br /> <input type="password" id="spass" name="pass" value=""><br />
 				Use fanart.tv artist images (note this can increase bandwith) <input type="checkbox" id="fanart" name="fanart" value="fanart"><br />
-				Publish 'likes' on facebook <input type="checkbox" id="publishonfacebook" name="publishonfacebook" value="publishonfacebook"><br />
+				Fetch lyrics from http://lyrics.wikia.com/ <input type="checkbox" id="uselyrics" name="uselyrics" value="uselyrics">
+				<br />
+				Publish 'likes' on facebook <input type="checkbox" disabled id="publishonfacebook" name="publishonfacebook" value="publishonfacebook" checked="false"><br />
+				
 				<input type="button" id="SaveSettings" value="Save!">
 				<input type="button" id="ClearCache" value="Clear Cache">
 				<input type="button" id="CloseButton" value="Close">
-				<span style='' id="versionLabel">0.4.10</span>
+				<span style='' id="versionLabel">0.4.11</span>
 		</div>
 
 

@@ -127,7 +127,7 @@ AMPACHE.prototype.createObjectURL = function (file) {
 AMPACHE.prototype.loadImageCached = function (resource, ele) {
 	var cKey = "i_" + CryptoJS.SHA256(resource).toString();
 	var _this = this;
-	$("#"+ele.id).hide()
+	$("#"+ele.id).hide() // Comment this for the android version.
 	var cacheWorked = false;
 	CustomStorage.getVar(cKey, function (varO) {
 		console.log("Searching for cached: "+cKey);
@@ -143,6 +143,7 @@ AMPACHE.prototype.loadImageCached = function (resource, ele) {
 			ele.onload = function (e) {
 				_this.cacheCounter.hit++;
 				$("#"+this.id).fadeIn();
+
 			}
 			cacheWorked = true;
 		}
@@ -225,11 +226,14 @@ AMPACHE.prototype.localplay = function (songnumber) {
 	
 	markSong(currentSong);
 
-	if (typeof useLyrics!='undefined')
-		if (useLyrics) {
+	
+		if (_("uselyrics").checked) {
+			console.log("Fetching lyrics");
 			$("#lyricsCanvas").hide()
 			extractLyrics();
-		}
+		} else
+			console.log("uselyrics is false");
+	
 
 	console.log("Cache: "+conn.cacheCounter.miss+ " misses "+conn.cacheCounter.hit+" hits ");
 }
