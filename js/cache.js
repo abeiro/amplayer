@@ -23,6 +23,33 @@ function _getCachedData(i, durl, ret)
     });
 }
 
+function _getCachedDataNew(cmd, durl, ret) 
+{
+    var request = $.ajax({
+        url : durl, type : "GET", dataType : "xml" 
+    });
+    request.done(function (rawdata) 
+    {
+		songsNodes=rawdata.getElementsByTagName("song");
+		r=new Object();
+		r.root=new Object()
+		r.root.song=new Array();
+		i=0;
+		for (i=0;i<songsNodes.length;i++) { 
+			r.root.song[i]=new Object();
+			r.root.song[i].id=songsNodes[i].attributes[0].value;
+			for (j=0;j<songsNodes[i].children.length;j++) {
+				r.root.song[i][songsNodes[i].children[j].nodeName]=songsNodes[i].children[j].textContent;
+
+			}
+			// for (j=0;j<mysongs[0].children.length;j++) { console.log(mysongs[0].children[j].nodeName) }
+		}
+        
+        ret(r);
+    });
+}
+
+
 
 function _getCachedDataXML(i, durl, ret) 
 {

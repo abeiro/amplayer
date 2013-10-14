@@ -73,13 +73,15 @@ function InitFB() {
 			if (typeof e == 'undefined' )
 				console.log("Couldn't get feisbuk token:"+e);
 			else {
+				console.log(e);
 				ACCESS_TOKEN=e.split("#")[1].split("=")[1].split("&")[0];	
-				$.get( "https://graph.facebook.com/debug_token?input_token="+ACCESS_TOKEN+"&access_token="+ACCESS_TOKEN) 
+				
+				$.get("https://graph.facebook.com/me?access_token="+ACCESS_TOKEN) 
 				.done(function(fdata) {
-						console.log(fdata.data);
-						USER_PAGE=fdata.data.user_id;
+						console.log(fdata);
+						USER_PAGE=fdata.id;
 					})
-
+				
 				}
 			}
 		);

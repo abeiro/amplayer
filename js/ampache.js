@@ -53,7 +53,7 @@ Get all songs.
 */
 AMPACHE.prototype._getSongs = function (cmd, ret) {
 	var _this = this;
-	_getCachedData("songs", this.URL + "?" + "action=songs" + "&auth=" + this._authkey, function (edata) {
+	_getCachedDataNew("songs", this.URL + "?" + "action=songs" + "&auth=" + this._authkey, function (edata) {
 		_this._songs = edata;
 		loadPlayList();
 		_this._getPlayLists();
@@ -97,6 +97,19 @@ AMPACHE.prototype._getPlayLists = function () {
 
 		}
 	});
+}
+
+
+/*** 
+Get playlists
+*/
+AMPACHE.prototype.vote = function () {
+	var _this = this;
+	oid=this._songs.root.song[currentSong].id
+	var request = $.ajax({
+        url : this.URL + "?" + "action=democratic&method=vote&oid="+oid + "&auth=" + this._authkey, type : "GET", dataType : "xml" 
+    });
+    
 }
 
 /*** 
@@ -407,17 +420,25 @@ function initSystem() {
 	_("ampacheplayer").addEventListener("error", function (e) {
 		console.log("Error: "+e);
 		err=e.target.error;;
-		if (err.code==err.MEDIA_ERR_ABORTED)
+		if (err.code==err.MEDIA_ERR_ABORTED) {
 			console.log("MEDIA_ERR_ABORTED");
-		if (err.code==err.MEDIA_ERR_NETWORK)
+			errMsg="MEDIA_ERR_ABORTED";
+		}
+		if (err.code==err.MEDIA_ERR_NETWORK) {
 			console.log("MEDIA_ERR_NETWORK");
-		if (err.code==err.MEDIA_ERR_DECODE)
+			errMsg="MEDIA_ERR_NETWORK";
+		}
+		if (err.code==err.MEDIA_ERR_DECODE) {
 			console.log("MEDIA_ERR_DECODE");
-		if (err.code==err.MEDIA_ERR_SRC_NOT_SUPPORTED)
+			errMsg="MEDIA_ERR_DECODE";
+		}
+		if (err.code==err.MEDIA_ERR_SRC_NOT_SUPPORTED) {
 			console.log("MEDIA_ERR_SRC_NOT_SUPPORTED: "+e.target.src);
+			errMsg="MEDIA_ERR_SRC_NOT_SUPPORTED";
+		}
 
 		_("title").innerHTML = "Error";
-		_("artist").innerHTML = "Connection lost";
+		_("artist").innerHTML = errMsg;
 		_("album").innerHTML = "Maybe session has expired. Reload";
 	});
 	_("cRandomPl").addEventListener("click", function () {
@@ -430,6 +451,7 @@ function initSystem() {
 
 	_("cLike").addEventListener("click", function () {
 		publishOnFaceBook();
+		conn._vote();
 	});
 
 	_("cShow").addEventListener("click", function () {
