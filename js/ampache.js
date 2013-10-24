@@ -34,16 +34,29 @@ function AMPACHE(admin, pass, url) {
 	this.cacheCounter.hit=0;
 
 	// Main request
+	_("title").innerHTML = "Connecting...";
 	var request = $.ajax({
 		url: DURL,
 		type: "GET",
 		dataType: "text"
 	});
 	request.done(function (rawdata) {
-		xml = xml2array($.parseXML(rawdata));
-		_this._authkey = xml.root.auth;
-		_this._nsongs = xml.root.songs;
-		_this._getSongs();
+		if (rawdata=="") {
+		_("title").innerHTML = "Empty reponse. Maybe user/password are invalid";
+		} else {
+			xml = xml2array($.parseXML(rawdata));
+			_this._authkey = xml.root.auth;
+			_this._nsongs = xml.root.songs;
+			_this._getSongs();
+			_("title").innerHTML = "Ready to play!";
+		}
+	});
+
+
+	request.fail(function (rawdata) {
+		console.log(rawdata);
+		_("title").innerHTML = "Connection error: " +rawdata.statusText
+
 	});
 }
 
@@ -240,7 +253,7 @@ AMPACHE.prototype.localplay = function (songnumber) {
 	markSong(currentSong);
 
 	
-		if (_("uselyrics").checked) {
+		if (gUseLyrics) {
 			console.log("Fetching lyrics");
 			$("#lyricsCanvas").hide()
 			extractLyrics();
