@@ -231,7 +231,7 @@ AMPACHE.prototype.localplay = function (songnumber) {
 	currentSong = songnumber;
 	
 	_("ampacheplayer").src = this._songs.root.song[songnumber].url;
-	console.log("Checking if browser can play this:"+_("ampacheplayer").canPlayType());
+	//console.log("Checking if browser can play this:"+_("ampacheplayer").canPlayType());
 
 	_("ampacheplayer").load();
 	_("title").innerHTML = this._songs.root.song[songnumber].title;
