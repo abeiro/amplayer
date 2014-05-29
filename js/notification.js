@@ -11,24 +11,59 @@ FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more de
 You should have received a copy of the GNU General Public License along with Ampache Player. 
 If not, see http://www.gnu.org/licenses/.
 /********************************************************************************************/
-function showPopup(thumb, title, body) 
+
+/*
+<script>
+	var Notification = window.Notification || window.mozNotification || window.webkitNotification;
+
+	Notification.requestPermission(function (permission) {
+		// console.log(permission);
+	});
+
+	function show() {
+		window.setTimeout(function () {
+			var instance = new Notification(
+				"Fu", {
+					body: "FUmsg"
+				}
+			);
+
+			instance.onclick = function () {
+				// Something to do
+			};
+			instance.onerror = function () {
+				// Something to do
+			};
+			instance.onshow = function () {
+				// Something to do
+			};
+			instance.onclose = function () {
+				// Something to do
+			};
+		}, 1000);
+
+		return false;
+	}
+</script>
+
+<a href="#" onclick="return show()">Notify me!</a>
+*/
+function showPopup(thumb, title, tbody) 
 {
-    if (!window.webkitNotifications) {
+    if (!window.Notification) {
         return;
     }
-    if (window.webkitNotifications.checkPermission() == 0) 
+    if (window.Notification.permission == "granted") 
     {
-        var popup = window.webkitNotifications.createNotification(thumb, title, body);
-        //Show the popup
-        popup.show();
-        //set timeout to hide it
+        var popup = new window.Notification(title,{body:tbody,icon:thumb});
+		
         setTimeout(function () 
         {
-            popup.cancel();
+            popup.close();
         }, 5000);
     }
     else {
-        window.webkitNotifications.requestPermission();
+        window.Notification.requestPermission();
     }
 }
 

@@ -246,8 +246,6 @@ AMPACHE.prototype.localplay = function (songnumber) {
 	
 	changeFavicon(this._songs.root.song[songnumber].art);
 	
-	showPopup(this._songs.root.song[songnumber].art, this._songs.root.song[songnumber].title, this._songs.root.song[songnumber].artist + " :: " + this._songs.root.song[songnumber].album);
-	
 	this.loadArt(this._songs.root.song[songnumber].mbid);
 	
 	markSong(currentSong);
@@ -261,7 +259,10 @@ AMPACHE.prototype.localplay = function (songnumber) {
 			console.log("uselyrics is false");
 	
 
+	
+	showPopup(this._songs.root.song[songnumber].art, this._songs.root.song[songnumber].title, this._songs.root.song[songnumber].artist + " :: " + this._songs.root.song[songnumber].album);
 	console.log("Cache: "+conn.cacheCounter.miss+ " misses "+conn.cacheCounter.hit+" hits ");
+	//showPopup(_("art").src, this._songs.root.song[songnumber].title, this._songs.root.song[songnumber].artist + " :: " + this._songs.root.song[songnumber].album);
 }
 
 
