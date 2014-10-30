@@ -23,6 +23,7 @@ var useFeisbuk = false;
 var tracing = true;
 var windowFeisbuk;
 var gUseLyrics = false;
+var gUseInternalProxy = false;
 
 try {
     browserApi = chrome.storage;
@@ -132,6 +133,16 @@ function loadPreferences()
         }
     });
 
+	CustomStorage.getVar("useInternalProxy", function (e) 
+    {
+        if ((e.useInternalProxy==true)||(e.useInternalProxy=="true")) {
+			gUseInternalProxy=true;
+            
+        }
+        else {
+            gUseInternalProxy=false;
+        }
+    });
 
     CustomStorage.getVar("username", function (e) 
     {
@@ -191,6 +202,11 @@ function showSettings()
         _("uselyrics").checked = e.uselyrics;
     });
 
+	CustomStorage.getVar("useInternalProxy", function (e) 
+    {
+        _("useInternalProxy").checked = e.useInternalProxy;
+    });
+
 
     _("SaveSettings").onclick = function () 
     {
@@ -200,7 +216,9 @@ function showSettings()
 					CustomStorage.setVar("fanart", _("fanart").checked, function (e) {
 						CustomStorage.setVar("feisbuk", _("publishonfacebook").checked==true, function (e) {
 							CustomStorage.setVar("uselyrics", _("uselyrics").checked==true, function (e) {
-								loadPreferences();
+								CustomStorage.setVar("useInternalProxy", _("useInternalProxy").checked==true, function (e) {
+									loadPreferences();
+								});
 							});
 						});		
 					});
@@ -217,8 +235,12 @@ function showSettings()
                 CustomStorage.setVar("password", _("spass").value, function (e) {
 					CustomStorage.setVar("fanart", _("fanart").checked, function (e) {
 						CustomStorage.setVar("feisbuk", _("publishonfacebook").checked=="true", function (e) {
-							closeSettings();
-					});		
+							CustomStorage.setVar("uselyrics", _("uselyrics").checked=="true", function (e) {
+								CustomStorage.setVar("useInternalProxy", _("useInternalProxy").checked=="true", function (e) {
+									closeSettings();
+								});		
+							});		
+						});		
 					});
 				});
 			});
