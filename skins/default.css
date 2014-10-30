@@ -148,6 +148,7 @@ div.plButton:hover {
 #settings input[type=checkbox],#settings input{
 	border:1px solid black;
 	background-color:gray;
+
 }
 
 #settings #versionLabel {
@@ -174,6 +175,7 @@ div.plButton:hover {
 	lefT: 0px;
 	z-index: -2;
 	overflow:hidden;
+	width: 100%;
 }
 #showCanvasImg {
 	overflow:hidden;

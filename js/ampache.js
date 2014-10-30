@@ -182,8 +182,13 @@ AMPACHE.prototype.loadImageCached = function (resource, ele) {
 				if (typeof app != 'undefined') // android app // android app
 					ele.src = resource;
 				else {
+					if (!gUseInternalProxy)
+						resUrl=resource;
+					else
+						resUrl="proxy.php?url="+encodeURIComponent(resource);
+					
 					var xhr = new XMLHttpRequest();
-					xhr.open('GET', resource, true);
+					xhr.open('GET', resUrl, true);
 					xhr.responseType = 'blob';
 					xhr.onload = function (e) {
 						ele.src = _this.createObjectURL(this.response);
@@ -353,7 +358,11 @@ AMPACHE.prototype.loadArt = function (song_mbid) {
 			$.getJSON("http://musicbrainz.org/ws/2/recording/" + song_mbid + "?inc=artist-credits+isrcs+releases&fmt=json",
 				function (dataSong) {
 					console.log(dataSong.releases);
-					$.getJSON("http://api.fanart.tv/webservice/artist/" + FANARTAPIKEY + "/" + dataSong["artist-credit"][0].artist.id + "/JSON/artistbackground",
+					if (!gUseInternalProxy)
+						fanUrl="http://api.fanart.tv/webservice/artist/" + FANARTAPIKEY + "/" + dataSong["artist-credit"][0].artist.id + "/JSON/artistbackground"
+					else
+						fanUrl="proxy.php?url="+encodeURIComponent("http://api.fanart.tv/webservice/artist/" + FANARTAPIKEY + "/" + dataSong["artist-credit"][0].artist.id + "/JSON/artistbackground");
+					$.getJSON(fanUrl,
 						function (dataSong) {
 							CustomStorage.setVar("cache_" + song_mbid, dataSong,function (e) {console.log(e)});
 							try {

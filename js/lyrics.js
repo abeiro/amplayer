@@ -5,8 +5,12 @@ function extractLyrics() {
 	superstring="";
 	$("#lyricsCanvas").html(superstring)
 	re=/(&#[0-9]{1,4};)/gm;
-	$.get("http://lyrics.wikia.com/"+conn._songs.root.song[currentSong].artist.replace(/ /g,"_")+":"+conn._songs.root.song[currentSong].title.replace(/ /g,"_")
-	,function (e) {
+	if (!gUseInternalProxy)
+		lyrUrl="http://lyrics.wikia.com/"+conn._songs.root.song[currentSong].artist.replace(/ /g,"_")+":"+conn._songs.root.song[currentSong].title.replace(/ /g,"_")
+	else
+		lyrUrl="proxy.php?url="+encodeURIComponent("http://lyrics.wikia.com/"+conn._songs.root.song[currentSong].artist.replace(/ /g,"_")+":"+conn._songs.root.song[currentSong].title.replace(/ /g,"_"));
+
+	$.get(lyrUrl,function (e) {
 		pass1=e.replace(/<br[\s\S]\/>/mg,'&#182;')
 		
 		pass2=pass1.match(re);

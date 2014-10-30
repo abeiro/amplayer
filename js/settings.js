@@ -189,22 +189,21 @@ function showSettings()
     });
     CustomStorage.getVar("fanart", function (e) 
     {
-        _("fanart").checked = e.fanart;
-    });
+        _("fanart").checked = (e.fanart!="false")?true:false;    });
 
 	CustomStorage.getVar("feisbuk", function (e) 
     {
-        _("publishonfacebook").checked = e.feisbuk;
+        _("publishonfacebook").checked = (e.feisbuk!="false")?true:false;;;
     });
 
 	CustomStorage.getVar("uselyrics", function (e) 
     {
-        _("uselyrics").checked = e.uselyrics;
+        _("uselyrics").checked = (e.uselyrics!="false")?true:false;;
     });
 
 	CustomStorage.getVar("useInternalProxy", function (e) 
     {
-        _("useInternalProxy").checked = e.useInternalProxy;
+        _("useInternalProxy").checked = (e.useInternalProxy!="false")?true:false;
     });
 
 
@@ -214,9 +213,9 @@ function showSettings()
 			CustomStorage.setVar("username", _("suser").value, function (e) {
                 CustomStorage.setVar("password", _("spass").value, function (e) {
 					CustomStorage.setVar("fanart", _("fanart").checked, function (e) {
-						CustomStorage.setVar("feisbuk", _("publishonfacebook").checked==true, function (e) {
-							CustomStorage.setVar("uselyrics", _("uselyrics").checked==true, function (e) {
-								CustomStorage.setVar("useInternalProxy", _("useInternalProxy").checked==true, function (e) {
+						CustomStorage.setVar("feisbuk", _("publishonfacebook").checked, function (e) {
+							CustomStorage.setVar("uselyrics", _("uselyrics").checked, function (e) {
+								CustomStorage.setVar("useInternalProxy", (_("useInternalProxy").checked==true)?true:false, function (e) {
 									loadPreferences();
 								});
 							});
@@ -234,8 +233,8 @@ function showSettings()
 			CustomStorage.setVar("username", _("suser").value, function (e) {
                 CustomStorage.setVar("password", _("spass").value, function (e) {
 					CustomStorage.setVar("fanart", _("fanart").checked, function (e) {
-						CustomStorage.setVar("feisbuk", _("publishonfacebook").checked=="true", function (e) {
-							CustomStorage.setVar("uselyrics", _("uselyrics").checked=="true", function (e) {
+						CustomStorage.setVar("feisbuk", _("publishonfacebook").checked, function (e) {
+							CustomStorage.setVar("uselyrics", _("uselyrics").checked, function (e) {
 								CustomStorage.setVar("useInternalProxy", _("useInternalProxy").checked=="true", function (e) {
 									closeSettings();
 								});		
