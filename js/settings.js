@@ -123,7 +123,7 @@ function loadPreferences()
 
    CustomStorage.getVar("uselyrics", function (e) 
     {
-        if (e.uselyrics==true) {
+        if ((e.uselyrics==true)||(e.uselyrics=="true")) {
 			gUseLyrics=true;
             
         }
