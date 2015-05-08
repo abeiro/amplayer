@@ -62,7 +62,7 @@ function InitFB() {
 
 	if (browserApi) {
 		try {
-		MY_FACEBOOK_OAUTH_URL='https://www.facebook.com/dialog/oauth?client_id='+client_id+'&redirect_uri=https://'+chrome.runtime.id+'.chromiumapp.org/bast&scope=publish_actions,publish_stream&response_type=token';
+		MY_FACEBOOK_OAUTH_URL='https://www.facebook.com/dialog/oauth?client_id='+client_id+'&redirect_uri=https://'+chrome.runtime.id+'.chromiumapp.org/bast&scope=publish_actions&response_type=token';
 		console.log(MY_FACEBOOK_OAUTH_URL);
 		chrome.identity.launchWebAuthFlow({
 			url: MY_FACEBOOK_OAUTH_URL,
@@ -89,7 +89,7 @@ function InitFB() {
 			console.log("Not a chrome app, so no facebook (atm)");
 		}
 	} else {
-		MY_FACEBOOK_OAUTH_URL='https://www.facebook.com/dialog/oauth?client_id='+client_id+'&redirect_uri=https://www.facebook.com/connect/login_success.html&scope=publish_actions,publish_stream&response_type=token';
+		MY_FACEBOOK_OAUTH_URL='https://www.facebook.com/dialog/oauth?client_id='+client_id+'&redirect_uri=https://www.facebook.com/connect/login_success.html&scope=publish_actions&response_type=token';
 		console.log(MY_FACEBOOK_OAUTH_URL);
 		//window.location.replace(MY_FACEBOOK_OAUTH_URL);
 					
