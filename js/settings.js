@@ -174,7 +174,7 @@ function loadPreferences()
 
 function showSettings() 
 {
-    _("settings").style.display = "block";
+ _("settings").style.display = "block";
     CustomStorage.getVar("username", function (e) 
     {
         _("suser").value = e.username;
@@ -189,21 +189,21 @@ function showSettings()
     });
     CustomStorage.getVar("fanart", function (e) 
     {
-        _("fanart").checked = (e.fanart!="false")?true:false;    });
+        _("fanart").checked = (e.fanart!="false" && e.fanart!=false)?true:false;    });
 
 	CustomStorage.getVar("feisbuk", function (e) 
     {
-        _("publishonfacebook").checked = (e.feisbuk!="false")?true:false;;;
+        _("publishonfacebook").checked = (e.feisbuk!=false && e.feisbuk!="false")?true:false;;;
     });
 
 	CustomStorage.getVar("uselyrics", function (e) 
     {
-        _("uselyrics").checked = (e.uselyrics!="false")?true:false;;
+        _("uselyrics").checked = (e.uselyrics!="false" && e.uselyrics!=false)?true:false;;
     });
 
 	CustomStorage.getVar("useInternalProxy", function (e) 
     {
-        _("useInternalProxy").checked = (e.useInternalProxy!="false")?true:false;
+        _("useInternalProxy").checked = (e.useInternalProxy!="false" && e.useInternalProxy!=false )?true:false;
     });
 
 

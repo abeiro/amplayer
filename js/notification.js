@@ -72,7 +72,7 @@ document.head || (document.head = document.getElementsByTagName('head')[0]);
 
 function changeFavicon(src) 
 {
-    var link = document.createElement('link'), oldLink = document.getElementById('dynamic-favicon');
+    /*var link = document.createElement('link'), oldLink = document.getElementById('dynamic-favicon');
     link.id = 'dynamic-favicon';
     link.rel = 'shortcut icon';
     link.href = src;
@@ -80,4 +80,22 @@ function changeFavicon(src)
         document.head.removeChild(oldLink);
     }
     document.head.appendChild(link);
+	*/
+    var xhr = new XMLHttpRequest();
+	xhr.open('GET', src, true);
+	xhr.responseType = 'blob';
+	xhr.onload = function(e) {
+  		/*var img = document.createElement('img');
+  		img.src = window.URL.createObjectURL(this.response);
+  		document.body.appendChild(img);*/
+  		var link = document.createElement('link'), oldLink = document.getElementById('dynamic-favicon');
+    	link.id = 'dynamic-favicon';
+    	link.rel = 'shortcut icon';
+    	link.href =  window.URL.createObjectURL(this.response);
+    	if (oldLink) {
+        	document.head.removeChild(oldLink);
+    	}
+    	document.head.appendChild(link);
+	};
+	xhr.send();
 }

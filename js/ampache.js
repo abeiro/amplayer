@@ -433,6 +433,7 @@ function initSystem() {
 		showSettings()
 	}
 	_("ampacheplayer").addEventListener("ended", function () {
+		debugger;
 		conn.nextSong()
 	});
 
