@@ -1,34 +1,35 @@
 @import url(default_table.css);
 
 body {
-    font-family:Trebuchet MS;
+    /* font-family: sans-serif; */
     color:white;
     background-color:black;
-	font-size:15px;
 	overflow:hidden;
+    zoom: 1;
 }
 
 #title {
-  font-size:27px;
+  font-size:xx-large;
   padding:0px;
   margin:0px;
-  text-shadow: black 0.1em 0.1em 0.2em;
+  /*text-shadow: 2px 2px 2px black,-2px -2px -2px black;*/
+  text-shadow: 0 0 3px black, 0 0 5px black;
   color:white;
 }
 
 #artist {
-  font-size:23px;
+  font-size:xx-large;
   padding:0px;
   margin:0px;
-  text-shadow: black 0.1em 0.1em 0.2em;
+  text-shadow: 0 0 3px black, 0 0 5px black;
   color:white;
 }
 
 #album {
-  font-size:21px;
+  font-size:xx-large;
   padding:0px;
   margin:0px;
-  text-shadow: black 0.1em 0.1em 0.2em;
+  text-shadow: 0 0 3px black, 0 0 5px black;
   color:white;
 }
 
@@ -39,13 +40,14 @@ body {
 }
 
 #playerCanvas {
-   width:100%;
+   width:98%;
    position:relative;
+   left:1%;
    
 }
 
 #playlist {
-  font-size:16px;
+  font-size: large;
 
 }
 
@@ -60,12 +62,10 @@ body {
 }
 
 #playlistContent tr td {
-  font-size:16px;
+  font-size: large;
   white-space:nowrap;
   overflow:hidden;
   padding-left:5px;
-  height:32px;
-
 }
 
 
@@ -91,8 +91,8 @@ body {
 div.plButton {
     color:transparent;
     background-image:transparent;
-    width:32px;
-	height:32px;
+    width:48px;
+    height:48px;
     cursor:pointer;
 }
 
@@ -104,7 +104,7 @@ div.plButton:hover {
 #toolbar {
   margin-bottom:5px;
   border:1px solid gray; 
-  font-size:16px;
+  font-size:x-large;
   background-color:#424242;
   color:white;
   border-radius:5px;
@@ -137,11 +137,12 @@ div.plButton:hover {
 	color:black;
 	min-height:400px;
 	padding:15px;
+        font-size:x-large;
 
 }
 
 #settings *{
-	font-size:22px;
+	font-size:xx-large;
 
 }
 
@@ -151,8 +152,13 @@ div.plButton:hover {
 
 }
 
+#settings input[type=checkbox] {
+    height: 3%;
+    width: 3%;
+}
+
 #settings #versionLabel {
-	font-size:8px;
+	font-size:medium;
 	top: 0px;
 	right: 50px;
 	position: absolute;
@@ -176,9 +182,16 @@ div.plButton:hover {
 	z-index: -2;
 	overflow:hidden;
 	width: 100%;
+        border: 0px;
+        margin: 0px;
+        padding: 0px;
+        height:100%;
 }
 #showCanvasImg {
 	overflow:hidden;
+        position: fixed;
+        top: 0px;
+        left: 0px;
 }
 #playlistselect {
 	position: absolute;
@@ -214,28 +227,30 @@ html:fullscreen {
 	background-image:url(../img/like.png);
 	background-position:center left;
 	background-repeat: no-repeat;
-	width:24px;
+	
+	margin: 0px;
+	padding: 0px;
+	bottom: 0px;
 }
 
 #lyricsCanvas {
-	position: absolute;
-	top: 10px;
-	padding:10px;
-	right: 10px;
-	font-family: verdana;
-	font-size: 13px;
-	z-index: 5;
-	font-weight: bold;
-	opacity:0.9;
-	/*text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;*/
-	max-height:500px;
-	background-color:white;
-	color:black;
-	border-radius:15px;
-	overflow-y:scroll;
-	width: 400px;
-	word-wrap: break-word;
-	display:none;
+    position: absolute;
+    top: 10px;
+    padding: 10px;
+    right: 10px;
+    font-family: monospace;
+    font-size: medium;
+    z-index: 5;
+    font-weight: normal;
+    opacity: 0.9;
+    background-color: black;
+    color: white;
+    border-radius: 15px;
+    overflow-y: scroll;
+    width: 400px;
+    word-wrap: break-word;
+    display: none;
+    height: 75%;
 }
 
 ::-webkit-scrollbar {

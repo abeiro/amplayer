@@ -30,6 +30,7 @@ try {
 }
 catch (thisIsNotAChromeApp) {
     browserApi = false;
+    
 }
 
 if (typeof app != 'undefined') // android app // android app
@@ -207,6 +208,12 @@ function showSettings()
     });
 
 
+     if (!browserApi) {
+         _("useInternalProxy").checked=false;
+          _("publishonfacebook").checked=false;
+         
+     }
+     
     _("SaveSettings").onclick = function () 
     {
         CustomStorage.setVar("url", _("surl").value, function (e)  {

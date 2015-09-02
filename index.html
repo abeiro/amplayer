@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="format-detection" content="telephone=no" />
 <meta name="viewport"
-	content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+	content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
 <link href="skins/default.css" rel="stylesheet" type="text/css">
 <title>AMPACHE PLAYER</title>
 </head>
@@ -75,8 +75,8 @@
 				Use fanart.tv artist images (note this can increase bandwith) <input type="checkbox" id="fanart" name="fanart" value="fanart"><br />
 				Fetch lyrics from http://lyrics.wikia.com/ <input type="checkbox" id="uselyrics" name="uselyrics" value="uselyrics">
 				<br />
-				Publish 'likes' on facebook <input type="checkbox" disabled id="publishonfacebook" name="publishonfacebook" value="publishonfacebook" checked="false"><br />
-				Use internal proxy <input disabled type="checkbox" id="useInternalProxy" name="useInternalProxy" value="useInternalProxy"><br />
+				Publish 'likes' on facebook <input type="checkbox" disabled id="publishonfacebook" name="publishonfacebook" value="false" ><br />
+				Use internal proxy <input disabled type="checkbox" id="useInternalProxy" name="useInternalProxy" value="false"><br />
 				<input type="button" id="SaveSettings" value="Save!">
 				<input type="button" id="ClearCache" value="Clear Cache">
 				<input type="button" id="CloseButton" value="Close">
@@ -86,7 +86,7 @@
 				<p style="font-size:14px">
 					Demostration Ampache server: http://smellof.tk/ampachedemo/. User/Pass: guest
 				</p>
-				<span style='' id="versionLabel">0.4.18</span>
+				<span style='' id="versionLabel">0.4.21</span>
 		</div>
 
 

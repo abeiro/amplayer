@@ -306,7 +306,7 @@ AMPACHE.prototype.toogleShowMan = function () {
 		$('#art').show();
 
 	} else {
-		_('playerCanvas').style.opacity = 0.75;
+		_('playerCanvas').style.opacity = 0.85;
 		_('playerCanvas').style.position = "absolute";
 		_('playerCanvas').style.top = "";
 		_('playerCanvas').style.bottom = "0px";
@@ -405,6 +405,41 @@ function markSong(i) {
 		console.log(idontcare);
 	}
 }
+
+
+function disposeElements() {
+    
+    
+      /* Make this something responsive */
+        
+        xDpi=window.innerWidth/1024;
+        yDpi=window.innerHeight/720;
+        
+        aZoom=(yDpi<xDpi)?yDpi:xDpi;
+        
+        console.log("Reshaping..."+aZoom);
+        
+        _("playerCanvas").style.zoom=aZoom;
+        _("lyricsCanvas").style.zoom=aZoom;
+        _("settings").style.zoom=aZoom;
+        
+        
+        
+        
+	if (window.innerWidth > window.innerHeight) {
+		_('showCanvasImg').style.width = "100%";
+                _('showCanvasImg').style.height = "100%";
+	} else {
+		_('showCanvasImg').style.height = "100%";
+                _('showCanvasImg').style.width = "100%";
+	}
+	try {
+            _('playlistContent').style.width = (window.innerWidth - 5) + "px";
+            
+        } catch (idontcare) {}
+}
+
+
 var conn;
 var currentSong;
 
@@ -422,6 +457,9 @@ else {
 
 
 function initSystem() {
+    
+      
+        
 	/* Add event listeners */
 	_("cPrev").onclick = function () {
 		conn.prevSong()
@@ -433,7 +471,7 @@ function initSystem() {
 		showSettings()
 	}
 	_("ampacheplayer").addEventListener("ended", function () {
-		debugger;
+		
 		conn.nextSong()
 	});
 
@@ -484,9 +522,9 @@ function initSystem() {
 
 	_("cLyrics").addEventListener("click", function () {
 		
-		_("lyricsCanvas").style.right="";
-		_("lyricsCanvas").style.left=(window.innerWidth-450)+"px";
-		$("#lyricsCanvas").toggle()
+		//_("lyricsCanvas").style.right="";
+		//_("lyricsCanvas").style.left=(window.innerWidth-450)+"px";
+		$("#lyricsCanvas").toggle();
 	});
 	
 
@@ -499,7 +537,7 @@ function initSystem() {
 				|| el.mozRequestFullScreen
 				rfs.call(el);
 	
-				this.isFullScreen=true;s
+				this.isFullScreen=true;
 		} else {
 			if (document.exitFullscreen) {
 				document.exitFullscreen();
@@ -519,35 +557,17 @@ function initSystem() {
 	
 
 	window.addEventListener(orientationEvent, function () {
-		if (window.innerWidth > window.innerHeight) {
-			_('showCanvasImg').style.width = window.innerWidth  + "px";
-		} else {
-			_('showCanvasImg').style.height = window.innerHeight + "px";
-		}
+		disposeElements()
 	}, false);
 
 
 
 	window.addEventListener(orientationEvent, function () {
-		_('playlistContent').style.width = (window.innerWidth - 15) + "px";
-		if (window.innerWidth > window.innerHeight) {
-			_('showCanvasImg').style.width = window.innerWidth  + "px";
-		} else {
-			_('showCanvasImg').style.height = window.innerHeight  + "px";
-		}
+		disposeElements()
 	}, false);
 
 	window.addEventListener("resize", function () {
-		_('playlistContent').style.width = (window.innerWidth - 15) + "px";
-		if (window.innerWidth > window.innerHeight) {
-			_('showCanvasImg').style.height = window.innerHeight  + "px";
-			_('showCanvasImg').style.width = window.innerWidth  + "px";
-		} else {
-			_('showCanvasImg').style.height = window.innerHeight  + "px";
-			_('showCanvasImg').style.width = "auto";
-		}
-		_("lyricsCanvas").style.right="";
-		_("lyricsCanvas").style.left=(window.innerWidth-450)+"px";
+		disposeElements()
 	}, false);
 
 
@@ -574,4 +594,8 @@ function initSystem() {
 			console.log("Tracker disabled");
 		}
 	}
+	
+        disposeElements();
+
+                
 }

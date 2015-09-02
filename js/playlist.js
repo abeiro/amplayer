@@ -11,6 +11,9 @@ FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more de
 You should have received a copy of the GNU General Public License along with Ampache Player. 
 If not, see http://www.gnu.org/licenses/.
 /********************************************************************************************/
+
+var dataTable;
+
 function ceventFired(evType) 
 {
     a = jQuery("div.plButton");
@@ -33,7 +36,7 @@ function loadPlayList()
         f["title"], f["artist"], f["album"] ] 
     }
     $('#playlist').html( '<table cellpadding="0" cellspacing="0" border="0" class="display" id="playlistContent"></table>' );
-    $('#playlistContent') .bind('sort', function () 
+    dataTable=$('#playlistContent') .bind('sort', function () 
     {
         ceventFired( 'Sort' );
     }) .bind('filter', function () 
@@ -57,7 +60,7 @@ function loadPlayList()
             "sAlbum" : "Album" 
         } ],
 		"aLengthMenu" : [[5,10,25,50,-1], [5, 10, 25,50, "All"]],
-		"iDisplayLength":10,
+		"iDisplayLength":5,
     } );
     $("#playlistContent_paginate").on("click", "a", function () 
     {
