@@ -17,6 +17,28 @@ If not, see http://www.gnu.org/licenses/.
 
 function publishOnFaceBook() {
 
+        if (window.plugins.socialsharing != 'undefined') {
+            a=conn._songs.root.song[currentSong];
+            if (a.fanart) 
+		picture=a.fanart;
+            else
+		picture="";
+
+            if (a.mbid)
+		link="http://musicbrainz.org/recording/"+a.mbid+"?inc=artist-credits+isrcs+releases";
+            else
+		link="";
+                
+            //window.plugins.socialsharing.shareVia('mms',
+            window.plugins.socialsharing.share(
+            "Just listened "+a.title+" ("+a.artist+")  via Ampache Player",
+            "I like this song: ",
+            picture,
+            link);
+            return;
+        }
+  
+    
 	if (ACCESS_TOKEN==null)
 		return;
 	if (USER_PAGE==null)

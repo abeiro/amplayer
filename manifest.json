@@ -10,7 +10,7 @@
       "16": "logo16.png"
    },
    "manifest_version": 2,
-   "name": "Ampache Player",
+   "name": "AMPlayer",
    "permissions": [ "webview", "http://*/", "notifications", "storage" ,"https://www.google-analytics.com/","fullscreen","identity","<all_urls>"],
     
    "version": "0.4.22"
