@@ -362,6 +362,7 @@ AMPACHE.prototype.loadArt = function (song_mbid) {
 						fanUrl="http://api.fanart.tv/webservice/artist/" + FANARTAPIKEY + "/" + dataSong["artist-credit"][0].artist.id + "/JSON/artistbackground"
 					else
 						fanUrl="proxy.php?url="+encodeURIComponent("http://api.fanart.tv/webservice/artist/" + FANARTAPIKEY + "/" + dataSong["artist-credit"][0].artist.id + "/JSON/artistbackground");
+                                        
 					$.getJSON(fanUrl,
 						function (dataSong) {
 							CustomStorage.setVar("cache_" + song_mbid, dataSong,function (e) {console.log(e)});
@@ -577,7 +578,7 @@ function initSystem() {
 
 	window.setInterval(function() {conn._ping()},1000*600);
 
-	if ((browserApi != false)) {
+	if ((browserApi )) {
 		try {
 			/* Tracker */
 			service = analytics.getService('Ampache Player');

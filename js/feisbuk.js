@@ -16,20 +16,19 @@ If not, see http://www.gnu.org/licenses/.
 
 
 function publishOnFaceBook() {
-
-        if (window.plugins.socialsharing != 'undefined') {
+        if (window.plugins != undefined) 
+        if (window.plugins.socialsharing != undefined) {
             a=conn._songs.root.song[currentSong];
             if (a.fanart) 
 		picture=a.fanart;
             else
-		picture="";
+		picture=convertImgToBase64URL(_("art").src);
 
             if (a.mbid)
 		link="http://musicbrainz.org/recording/"+a.mbid+"?inc=artist-credits+isrcs+releases";
             else
 		link="";
                 
-            //window.plugins.socialsharing.shareVia('mms',
             window.plugins.socialsharing.share(
             "Just listened "+a.title+" ("+a.artist+")  via Ampache Player",
             "I like this song: ",
@@ -37,13 +36,7 @@ function publishOnFaceBook() {
             link);
             return;
         }
-  
-    
-	if (ACCESS_TOKEN==null)
-		return;
-	if (USER_PAGE==null)
-		return;
-	$("#cLike").fadeOut();
+  	$("#cLike").fadeOut();
 	try {
 		a=conn._songs.root.song[currentSong];
 		if (a.fanart) 
@@ -56,26 +49,29 @@ function publishOnFaceBook() {
 		else
 			link="";
 
-		$.post( "https://graph.facebook.com/"+USER_PAGE+"/feed", 
-			{ 
-			'message':"Just listened "+a.title+" ("+a.artist+")  via Ampache Player",
-			'picture':picture,
-			'link':link,
-			'access_token':ACCESS_TOKEN
-
-			} 
-		).done(function() {
-				$("#cLike").get(0).style.backgroundColor="white"
-				$("#cLike").fadeIn();
-				
-		}).fail(function() {
-				$("#cLike").get(0).style.backgroundColor="black"
-				$("#cLike").fadeIn()
-		});
+                s="https://www.facebook.com/dialog/feed?app_id=576853419017449&display=page&caption="+encodeURIComponent("Just listened "+a.title+" ("+a.artist+")  via Ampache Player")+"&link="+link+"&redirect_uri="+encodeURIComponent("https://chrome.google.com/webstore/detail/amplayer/fgmlgjpjedpnhbbpahgcknnjkhlbjhgp")+"&picture="+encodeURIComponent(picture)
+                console.log(s);
+                window.open(s);
+                
+                $("#cLike").fadeIn();
 	} catch (e) {
 
 	}
 
+}
+
+function convertImgToBase64URL(url){
+        sImg=new Image;
+        sImg.src=url;
+        var canvas = document.createElement('CANVAS');
+        canvas.style.display="none";
+        ctx = canvas.getContext('2d');
+        canvas.height = sImg.height;
+        canvas.width = sImg.width;
+        ctx.drawImage(sImg, 0, 0);
+        dataURL = canvas.toDataURL("jpg");
+        //callback(dataURL);
+        return dataURL;
 }
 
 function InitFB() {
