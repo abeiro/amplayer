@@ -8,7 +8,7 @@ body {
 }
 
 #title {
-  font-size: x-large;
+  font-size: xx-large;
 }
 
 #artist {
@@ -50,7 +50,7 @@ body {
 
 
 #lyricsCanvas {
-    font-size: medium;
+    font-size: large;
 }
 
 #cLike {

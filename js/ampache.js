@@ -255,11 +255,18 @@ AMPACHE.prototype.localplay = function (songnumber) {
 	
 	markSong(currentSong);
 
+	$("#infoCanvas").hide();
+	$("#lyricsCanvas").hide();
+	try {
+				showInfo();
+	}  catch (idontcare) {}	
 	
 		if (gUseLyrics) {
 			console.log("Fetching lyrics");
-			$("#lyricsCanvas").hide()
-			extractLyrics();
+			try {
+					extractLyrics();
+			}	
+			catch (idontcare) {}
 		} else
 			console.log("uselyrics is false");
 	
@@ -403,7 +410,7 @@ function markSong(i) {
 		});
 		_("s" + i).parentNode.parentNode.style.textDecoration = "underline";
 	} catch (idontcare) {
-		console.log(idontcare);
+		//console.log(idontcare);
 	}
 }
 
@@ -528,7 +535,12 @@ function initSystem() {
 		$("#lyricsCanvas").toggle();
 	});
 	
+	_("cInfo").addEventListener("click", function () {
+		
+		$("#infoCanvas").toggle();
 
+	});
+	
 	_("fullScreenButton").addEventListener("click", function () {
 		if (!this.isFullScreen) {
 			var el = document.documentElement

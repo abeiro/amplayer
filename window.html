@@ -7,6 +7,7 @@
 	content="user-scalable=yes, initial-scale=1, maximum-scale=2, minimum-scale=1, width=device-width, height=device-height" />
 <link href="skins/default.css" rel="stylesheet" type="text/css">
 <link href="skins/chromeapp.css" rel="stylesheet" type="text/css">
+<link href="css/icons.css" rel="stylesheet" type="text/css">
 <title>Ampache Player</title>
 </head>
 <body>
@@ -23,6 +24,7 @@
   <script src="js/skin.js"></script>
   <script src="js/playlist.js"></script>
   <script src="js/lyrics.js"></script>
+  <script src="js/wikipedia.js"></script>
   
   
 	<div class="app">
@@ -49,7 +51,8 @@
 				<span id="cReload">RELOAD</span> ::
 				<span id="cLike">&nbsp;&hearts;&nbsp;</span> ::
 				<span id="cShow">SHOW</span> :: 
-				<span id="cLyrics">LYR</span>
+				<span id="cLyrics">LYR</span> ::
+				<span id="cInfo">INFO</span>
 			</div>
 			<div id="playlist"></div>
 			
@@ -58,6 +61,11 @@
 		<div id="showCanvas">
 			<div id="lyricsCanvas">Configure lyrics in settings</div>
 			<img id="showCanvasImg"/>
+			<div id="infoCanvas">
+				<img id="infoCanvasImg"></img>
+				<div id="infoCanvasReal">
+			</div>
+			
 		</div>
 		<div id="fullScreenButton" title="Toggle Fullscreen"><img src="images/fogull.png" /></div>
 
@@ -80,7 +88,7 @@
 				<p style="font-size:14px">
 					Demostration Ampache server: http://smellof.tk/ampachedemo/. User/Pass: guest
 				</p>
-				<span style='' id="versionLabel">v0.4.22</span>
+				<span style='' id="versionLabel">v0.4.24</span>
 		</div>
 
 		

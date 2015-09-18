@@ -1,4 +1,5 @@
 @import url(default_table.css);
+@import url(fonts.css);
 
 body {
     /* font-family: sans-serif; */
@@ -15,6 +16,7 @@ body {
   /*text-shadow: 2px 2px 2px black,-2px -2px -2px black;*/
   text-shadow: 0 0 3px black, 0 0 5px black;
   color:white;
+  font-family: Righteous;
 }
 
 #artist {
@@ -23,6 +25,7 @@ body {
   margin:0px;
   text-shadow: 0 0 3px black, 0 0 5px black;
   color:white;
+  font-family: Righteous;
 }
 
 #album {
@@ -31,6 +34,7 @@ body {
   margin:0px;
   text-shadow: 0 0 3px black, 0 0 5px black;
   color:white;
+  font-family: Righteous;
 }
 
 #art {
@@ -54,6 +58,7 @@ body {
 #playlistContent {
   width:480px;
   color:black;
+  font-family: Righteous;
 }
 
 #playlistContent   thead th {
@@ -116,9 +121,10 @@ div.plButton:hover {
 #toolbar span {
   cursor:pointer;
   border-radius:5px;
-  border:1px solid lightgray; 
+  border:1px solid lightgray;
   padding:2px;
   font-weight:bold;
+  font-family: Righteous;
 }
 
 #cNext:hover,#cPrev:hover,#cSettings:hover {
@@ -233,25 +239,7 @@ html:fullscreen {
 	bottom: 0px;
 }
 
-#lyricsCanvas {
-    position: absolute;
-    top: 10px;
-    padding: 10px;
-    right: 10px;
-    font-family: monospace;
-    font-size: medium;
-    z-index: 5;
-    font-weight: normal;
-    opacity: 0.9;
-    background-color: black;
-    color: white;
-    border-radius: 15px;
-    overflow-y: scroll;
-    width: 400px;
-    word-wrap: break-word;
-    display: none;
-    height: 75%;
-}
+
 
 ::-webkit-scrollbar {
     height: 12px;
@@ -266,4 +254,72 @@ html:fullscreen {
 }
 ::-webkit-scrollbar-corner {
     background: white;
+}
+
+#infoCanvas {
+    background-color: black;
+    position: absolute;
+    top: 10px;
+    padding: 2%;
+    left: 1%;
+    font-size: medium;
+    z-index: 15;
+    /* font-weight: 100; */
+    opacity: 0.9;
+    color: rgba(255,255,255,255);
+    border-radius: 9px;
+    overflow-y: scroll;
+    width: 45%;
+    word-wrap: break-word;
+    display: none;
+    height: 60%;
+    font-family: 'Alegreya Sans';
+    border:2px solid gray;
+    box-shadow:10px 10px 10px black;
+    font-size:large;
+    text-align: left;
+}
+
+#lyricsCanvas {
+    position: absolute;
+    top: 10px;
+    padding: 2%;
+    right: 1%;
+    font-family: 'Alegreya Sans';
+    z-index: 5;
+    opacity: 0.9;
+    background-color: black;
+    border-radius: 15px;
+    overflow-y: scroll;
+    width: 400px;
+    word-wrap: break-word;
+    display: none;
+    height: 60%;
+    border:2px solid gray;
+    box-shadow:10px 10px 10px black;
+    color: rgba(255,255,255,255);
+	text-shadow:1px 1px 1px rgba(0,0,255,255);
+	font-size:medium;
+}
+
+#lyricsCanvas * {
+
+}
+
+#infoCanvasReal * {
+	 color: rgba(255,255,255,255);
+	 text-shadow:1px 1px 1px rgba(0,0,255,255);
+}
+#infoCanvasImg {
+	width:50%;
+	float:lefT;
+	margin:5px;
+}
+
+#infoCanvas li a {
+	color:white;
+	text-decoration:none;
+	text-shadow:0 0 10px blue;
+	font-size:medium;
+
 }
