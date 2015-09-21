@@ -2,9 +2,8 @@
 body {
     /* font-family: sans-serif; */
     color:white;
-    background-color:black;
-	overflow:hidden;
-    zoom: 1;
+    background-color: black;
+    overflow:hidden;zoom:1;
 }
 
 #title {
@@ -50,7 +49,7 @@ body {
 
 
 #lyricsCanvas {
-    font-size: large;
+    font-size: medium;
 }
 
 #cLike {

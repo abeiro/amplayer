@@ -5,7 +5,7 @@
 <meta name="format-detection" content="telephone=no" />
 <meta name="viewport"
 	content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
-<link href="skins/default.css" rel="stylesheet" type="text/css">
+<link href="skins/default.css" rel="stylesheet" type="text/css" />
 <title>AMPACHE PLAYER</title>
 </head>
 <body>
@@ -30,7 +30,7 @@
 
 
 	  
-	<div class="app">
+		<div class="app">
 		<div id="playerCanvas">
 			<div id="subHeader">
 				<h1 id="title"></h1>
@@ -54,7 +54,8 @@
 				<span id="cReload">RELOAD</span> ::
 				<span id="cLike">&nbsp;&hearts;&nbsp;</span> ::
 				<span id="cShow">SHOW</span> :: 
-				<span id="cLyrics">LYR</span>
+				<span id="cLyrics">LYR</span> ::
+				<span id="cInfo">INFO</span>
 			</div>
 			<div id="playlist"></div>
 			
@@ -63,20 +64,24 @@
 		<div id="showCanvas">
 			<div id="lyricsCanvas">Configure lyrics in settings</div>
 			<img id="showCanvasImg"/>
+			<div id="infoCanvas">
+				<img id="infoCanvasImg"></img>
+				<div id="infoCanvasReal"></div>
+			</div>
+			
 		</div>
 		<div id="fullScreenButton" title="Toggle Fullscreen"><img src="images/fogull.png" /></div>
 
 
 		<div id="settings">
 				<h2>Ampache server settings</h2>
-				URL Ampache<br /> <input type="text" id="surl" name="url" value="" size="50" placeholder="http://smellof.tk/ampachedemo/"><br />
-				User<br /> <input type="text" id="suser" name="user" value="" placeholder="guest"><br />
+				URL Ampache<br /> <input type="text" id="surl" name="url" value="" size="50" ><br />
+				User<br /> <input type="text" id="suser" name="user" value=""><br />
 				Pass<br /> <input type="password" id="spass" name="pass" value=""><br />
 				Use fanart.tv artist images (note this can increase bandwith) <input type="checkbox" id="fanart" name="fanart" value="fanart"><br />
-				Fetch lyrics from http://lyrics.wikia.com/ <input type="checkbox" id="uselyrics" name="uselyrics" value="uselyrics">
-				<br />
-				Publish 'likes' on facebook <input type="checkbox" disabled id="publishonfacebook" name="publishonfacebook" value="false" ><br />
-				Use internal proxy <input disabled type="checkbox" id="useInternalProxy" name="useInternalProxy" value="false"><br />
+				Publish 'likes' on facebook <input type="checkbox" id="publishonfacebook" name="publishonfacebook" value="publishonfacebook"><br />
+				Fetch lyrics from http://lyrics.wikia.com/ <input type="checkbox" id="uselyrics" name="uselyrics" value="uselyrics"><br />
+				Use internal proxy <input type="checkbox" id="useInternalProxy" name="useInternalProxy" value="useInternalProxy"><br />
 				<input type="button" id="SaveSettings" value="Save!">
 				<input type="button" id="ClearCache" value="Clear Cache">
 				<input type="button" id="CloseButton" value="Close">
@@ -86,12 +91,13 @@
 				<p style="font-size:14px">
 					Demostration Ampache server: http://smellof.tk/ampachedemo/. User/Pass: guest
 				</p>
-				<span style='' id="versionLabel">0.4.22</span>
+				<span style='' id="versionLabel">v0.4.24</span>
 		</div>
 
+		
+		
 
 	</div>
-	
 
 
 

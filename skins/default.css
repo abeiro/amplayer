@@ -16,7 +16,7 @@ body {
   /*text-shadow: 2px 2px 2px black,-2px -2px -2px black;*/
   text-shadow: 0 0 3px black, 0 0 5px black;
   color:white;
-  font-family: Righteous;
+  font-family: Montserrat;
 }
 
 #artist {
@@ -25,7 +25,7 @@ body {
   margin:0px;
   text-shadow: 0 0 3px black, 0 0 5px black;
   color:white;
-  font-family: Righteous;
+  font-family: Montserrat;
 }
 
 #album {
@@ -34,7 +34,7 @@ body {
   margin:0px;
   text-shadow: 0 0 3px black, 0 0 5px black;
   color:white;
-  font-family: Righteous;
+  font-family: Montserrat;
 }
 
 #art {
@@ -44,10 +44,9 @@ body {
 }
 
 #playerCanvas {
-   width:98%;
+   width: 98%;
    position:relative;
    left:1%;
-   
 }
 
 #playlist {
@@ -58,7 +57,7 @@ body {
 #playlistContent {
   width:480px;
   color:black;
-  font-family: Righteous;
+  font-family: Montserrat;
 }
 
 #playlistContent   thead th {
@@ -124,7 +123,7 @@ div.plButton:hover {
   border:1px solid lightgray;
   padding:2px;
   font-weight:bold;
-  font-family: Righteous;
+  font-family: Montserrat;
 }
 
 #cNext:hover,#cPrev:hover,#cSettings:hover {
@@ -143,8 +142,8 @@ div.plButton:hover {
 	color:black;
 	min-height:400px;
 	padding:15px;
-        font-size:x-large;
-
+	font-size:x-large;
+	font-family: Montserrat;
 }
 
 #settings *{
@@ -174,7 +173,8 @@ div.plButton:hover {
 
 #subHeader {
 	min-height:130px;
-
+	/* background-color: black; */
+	/* width: 100%; */
 }
 
 
@@ -262,10 +262,10 @@ html:fullscreen {
     top: 10px;
     padding: 2%;
     left: 1%;
-    font-size: medium;
+    font-size: small;
     z-index: 15;
     /* font-weight: 100; */
-    opacity: 0.9;
+    opacity: 0.8;
     color: rgba(255,255,255,255);
     border-radius: 9px;
     overflow-y: scroll;
@@ -273,11 +273,11 @@ html:fullscreen {
     word-wrap: break-word;
     display: none;
     height: 60%;
-    font-family: 'Alegreya Sans';
+    font-family: Montserrat;
     border:2px solid gray;
     box-shadow:10px 10px 10px black;
-    font-size:large;
-    text-align: left;
+    font-size: 14px;
+    text-align: justify;
 }
 
 #lyricsCanvas {
@@ -285,7 +285,7 @@ html:fullscreen {
     top: 10px;
     padding: 2%;
     right: 1%;
-    font-family: 'Alegreya Sans';
+    font-family: Montserrat;
     z-index: 5;
     opacity: 0.9;
     background-color: black;
@@ -320,6 +320,5 @@ html:fullscreen {
 	color:white;
 	text-decoration:none;
 	text-shadow:0 0 10px blue;
-	font-size:medium;
-
+	font-size: small;
 }

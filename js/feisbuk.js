@@ -20,9 +20,9 @@ function publishOnFaceBook() {
         if (window.plugins.socialsharing != undefined) {
             a=conn._songs.root.song[currentSong];
             if (a.fanart) 
-		picture=a.fanart;
+				picture=a.fanart;
             else
-		picture=convertImgToBase64URL(_("art").src);
+				picture=convertImgToBase64URL(_("art").src);
 
             if (a.mbid)
 		link="http://musicbrainz.org/recording/"+a.mbid+"?inc=artist-credits+isrcs+releases";
@@ -30,7 +30,7 @@ function publishOnFaceBook() {
 		link="";
                 
             window.plugins.socialsharing.share(
-            "Just listened "+a.title+" ("+a.artist+")  via Ampache Player",
+            "Just listened "+a.title+" ("+a.artist+")",
             "I like this song: ",
             picture,
             link);
@@ -49,7 +49,7 @@ function publishOnFaceBook() {
 		else
 			link="";
 
-                s="https://www.facebook.com/dialog/feed?app_id=576853419017449&display=page&caption="+encodeURIComponent("Just listened "+a.title+" ("+a.artist+")  via Ampache Player")+"&link="+link+"&redirect_uri="+encodeURIComponent("https://chrome.google.com/webstore/detail/amplayer/fgmlgjpjedpnhbbpahgcknnjkhlbjhgp")+"&picture="+encodeURIComponent(picture)
+                s="https://www.facebook.com/dialog/feed?app_id=576853419017449&display=page&caption="+encodeURIComponent("Just listened "+a.title+" ("+a.artist+")")+"&link="+link+"&redirect_uri="+encodeURIComponent("https://goo.gl/lfF9vO")+"&picture="+encodeURIComponent(picture)
                 console.log(s);
                 window.open(s);
                 
