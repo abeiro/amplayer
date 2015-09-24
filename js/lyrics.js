@@ -91,7 +91,7 @@ function getBandInfo(iCallBack) {
 
 function showInfo() {
 	getBandInfo(function (data) {
-		console.log("Callback showInfo");
+		console.log("Callback showInfo:"+data);
 		buffer="";
 		$("#infoCanvasReal").hide();
 		$("#infoCanvasReal").html('');
@@ -116,7 +116,9 @@ function showInfo() {
 					$("#infoCanvasReal").html(nab)
 
 			});*/
-			wikUrlShort=baseName(wikUrl);
+			var re = /http[s]{0,1}:\/\/en\.wikipedia\.org\/wiki\//; 
+			wikUrlShort=wikUrl.replace(re,"");
+			//wikUrlShort=baseName(wikUrl);//BUG
 			console.log("wikUrlShort: "+wikUrlShort);
 			$.ajax({
 	    		type: "GET",
@@ -128,6 +130,7 @@ function showInfo() {
 		
 					// remove links as they will not work
 					i.find('a').each(function() { $(this).replaceWith($(this).html()); });
+					i.find('img').each(function() { $(this).replaceWith($(this).html()); });
 					// remove any references
 					i.find('sup').remove();
 		

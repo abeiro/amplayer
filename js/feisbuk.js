@@ -49,7 +49,7 @@ function publishOnFaceBook() {
 		else
 			link="";
 
-                s="https://www.facebook.com/dialog/feed?app_id=576853419017449&display=page&caption="+encodeURIComponent("Just listened "+a.title+" ("+a.artist+")")+"&link="+link+"&redirect_uri="+encodeURIComponent("https://goo.gl/lfF9vO")+"&picture="+encodeURIComponent(picture)
+                s="http://amplayer.xyz/share/?caption="+encodeURIComponent("Just listened "+a.title+" ("+a.artist+")")+"&link="+link+"&redirect_uri="+encodeURIComponent("https://goo.gl/lfF9vO")+"&picture="+encodeURIComponent(picture)+"&mbid="+a.mbid
                 console.log(s);
                 window.open(s);
                 
