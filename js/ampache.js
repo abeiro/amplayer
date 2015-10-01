@@ -27,6 +27,8 @@ function AMPACHE(admin, pass, url) {
 	this.URL = url + "/server/xml.server.php";
 	var DURL = this.URL + "?action=handshake&auth=" + this._passphrase + "&timestamp=" + _time + "&version=350001&user=" + this._user;
 	var _this = this;
+	this.hooks=new Array();
+	this.prehooks=new Array();
 
 	// Cache stats
 	this.cacheCounter=new Object();
@@ -140,8 +142,8 @@ AMPACHE.prototype._loadPlayList = function (plid) {
 }
 
 AMPACHE.prototype.createObjectURL = function (file) {
-	if (window.webkitURL) {
-		return window.webkitURL.createObjectURL(file);
+	if (window.URL) {
+		return window.URL.createObjectURL(file);
 	} else if (window.URL && window.URL.createObjectURL) {
 		return window.URL.createObjectURL(file);
 	} else {
@@ -153,7 +155,8 @@ AMPACHE.prototype.createObjectURL = function (file) {
 AMPACHE.prototype.loadImageCached = function (resource, ele) {
 	var cKey = "i_" + CryptoJS.SHA256(resource).toString();
 	var _this = this;
-	$("#"+ele.id).hide() // Comment this for the android version.
+	if (browserApi)
+		$("#"+ele.id).hide() 
 	var cacheWorked = false;
 	CustomStorage.getVar(cKey, function (varO) {
 		console.log("Searching for cached: "+cKey);
@@ -211,6 +214,10 @@ AMPACHE.prototype.loadImageCached = function (resource, ele) {
 
 
 AMPACHE.prototype.loadImage = function (resource, ele) {
+	if (resource=="img/defaultbg.png") {
+		ele.src=resource;
+	}
+
 	if (browserApi == false) {
 		ele.src = resource;
 	} else {
@@ -233,6 +240,7 @@ AMPACHE.prototype.loadImage = function (resource, ele) {
 
 AMPACHE.prototype.localplay = function (songnumber) {
 	
+	this.beforeplay();
 	currentSong = songnumber;
 	
 	_("ampacheplayer").src = this._songs.root.song[songnumber].url;
@@ -273,10 +281,38 @@ AMPACHE.prototype.localplay = function (songnumber) {
 
 	
 	showPopup(this._songs.root.song[songnumber].art, this._songs.root.song[songnumber].title, this._songs.root.song[songnumber].artist + " :: " + this._songs.root.song[songnumber].album);
-	console.log("Cache: "+conn.cacheCounter.miss+ " misses "+conn.cacheCounter.hit+" hits ");
+	console.log("Cache: "+this.cacheCounter.miss+ " misses "+this.cacheCounter.hit+" hits ");
+
+	try {
+		$("#nextTitle").html(" Next : "+
+		this._songs.root.song[currentSong+1].title
+		+" by "+this._songs.root.song[currentSong+1].artist+"");
+	} catch (idontcare) {}
+
+	
+	setTimeout(function(){ conn.afterplay() }, 3000);
+	
+
+
+	
 	//showPopup(_("art").src, this._songs.root.song[songnumber].title, this._songs.root.song[songnumber].artist + " :: " + this._songs.root.song[songnumber].album);
 }
 
+AMPACHE.prototype.beforeplay=function () {
+	if (Array.isArray(this.prehooks) ) {
+		
+		for (i in this.prehooks) 
+			this.prehooks[i](this._songs.root.song[currentSong-1]) 
+	}
+}
+
+AMPACHE.prototype.afterplay=function () {
+	if (Array.isArray(this.hooks) ) {
+		
+		for (i in this.hooks) 
+			this.hooks[i](this._songs.root.song[currentSong]) 
+	}
+}
 
 
 AMPACHE.prototype.nextSong = function () {
@@ -389,7 +425,7 @@ AMPACHE.prototype.loadArt = function (song_mbid) {
 								_this._songs.root.song[currentSong].fanart=dataSong[Object.keys(dataSong)[0]].artistbackground[rndIndex].url;
 								_this.loadImageCached(img, _("showCanvasImg"));
 							} catch (imgNotAvailable) {
-								console.log("Image not available for"+song_mbid);
+								console.log("Image not available for: "+song_mbid);
 								_this.loadImage("img/defaultbg.png", _("showCanvasImg"));
 							}
 						});
@@ -445,6 +481,17 @@ function disposeElements() {
             _('playlistContent').style.width = (window.innerWidth - 5) + "px";
             
         } catch (idontcare) {}
+
+        $('#myCanvas').tagcanvas({
+          					textColour: '#ffffff',
+          					outlineColour: '#ffffff',
+          					reverse: true,
+          					depth: 0.2,
+          					maxSpeed: 0.05,
+          					weight:true,
+          					weightFrom:'weight',textColour: null
+        				},'tags')
+     
 }
 
 
@@ -530,8 +577,6 @@ function initSystem() {
 
 	_("cLyrics").addEventListener("click", function () {
 		
-		//_("lyricsCanvas").style.right="";
-		//_("lyricsCanvas").style.left=(window.innerWidth-450)+"px";
 		$("#lyricsCanvas").toggle();
 	});
 	
@@ -540,6 +585,14 @@ function initSystem() {
 		$("#infoCanvas").toggle();
 
 	});
+	
+	_("cLastFM").addEventListener("click", function () {
+		
+		LFM=new LASTFM();
+
+	});
+	
+	_("cLastFM").style.opacity=0.5;
 	
 	_("fullScreenButton").addEventListener("click", function () {
 		if (!this.isFullScreen) {
@@ -590,25 +643,21 @@ function initSystem() {
 
 	window.setInterval(function() {conn._ping()},1000*600);
 
-	if ((browserApi )) {
-		try {
-			/* Tracker */
-			service = analytics.getService('Ampache Player');
-			service.getConfig().addCallback(function (config) {
-				config.setTrackingPermitted(true)
-			});
-			// Get a Tracker using your Google Analytics app Tracking ID.
-			tracker = service.getTracker('UA-43775693-1');
-			// Record an "appView" each time the user launches your app or goes to a new
-			// screen within the app.
-			tracker.sendAppView('MainView');
-			//currentSong=Math.floor((Math.random()*conn._nsongs)+1)-1;
-		} catch (fucktracker) {
-			console.log("Tracker disabled");
-		}
-	}
-	
-        disposeElements();
+	$('#myCanvas').tagcanvas({
+          					textColour: '#ffffff',
+          					outlineColour: '#ffffff',
+          					reverse: true,
+          					depth: 0.2,
+          					maxSpeed: 0.05,
+          					weight:true,
+          					weightFrom:'weight',textColour: null
+        				},'tags')
+     
+  		
+	disposeElements();
+
+		
+			
 
                 
 }

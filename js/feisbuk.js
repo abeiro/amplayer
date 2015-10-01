@@ -52,12 +52,31 @@ function publishOnFaceBook() {
                 s="http://amplayer.xyz/share/?caption="+encodeURIComponent("Just listened "+a.title+" ("+a.artist+")")+"&link="+link+"&redirect_uri="+encodeURIComponent("https://goo.gl/lfF9vO")+"&picture="+encodeURIComponent(picture)+"&mbid="+a.mbid
                 console.log(s);
                 window.open(s);
+                //openWindow(s,'Share','socialWindow')
                 
                 $("#cLike").fadeIn();
 	} catch (e) {
 
 	}
 
+}
+
+function openWindow(wurl,wtitle,wid) {
+
+		chrome.app.window.create("webview.html",{id:wid},function() {
+			lastfmwindow=chrome.app.window.get(wid)
+			lastfmwindow.contentWindow.main=function() {
+				wv=lastfmwindow.contentWindow.document.getElementById('webwindow')
+				lastfmwindow.contentWindow.document.title=wtitle;
+				wv.src=wurl
+	
+				lastfmwindow.onClosed.addListener(function (e) {
+					console.log(wid+" closed "+e)
+				
+				})
+			}
+	
+		})
 }
 
 function convertImgToBase64URL(url){
@@ -76,6 +95,7 @@ function convertImgToBase64URL(url){
 
 function InitFB() {
 
+	return; //This is deprecated
 	client_id='576853419017449';
 
 	if (browserApi) {

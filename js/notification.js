@@ -12,42 +12,7 @@ You should have received a copy of the GNU General Public License along with Amp
 If not, see http://www.gnu.org/licenses/.
 /********************************************************************************************/
 
-/*
-<script>
-	var Notification = window.Notification || window.mozNotification || window.webkitNotification;
 
-	Notification.requestPermission(function (permission) {
-		// console.log(permission);
-	});
-
-	function show() {
-		window.setTimeout(function () {
-			var instance = new Notification(
-				"Fu", {
-					body: "FUmsg"
-				}
-			);
-
-			instance.onclick = function () {
-				// Something to do
-			};
-			instance.onerror = function () {
-				// Something to do
-			};
-			instance.onshow = function () {
-				// Something to do
-			};
-			instance.onclose = function () {
-				// Something to do
-			};
-		}, 1000);
-
-		return false;
-	}
-</script>
-
-<a href="#" onclick="return show()">Notify me!</a>
-*/
 function showPopup(thumb, title, tbody) 
 {
     if (!window.Notification) {
@@ -72,15 +37,7 @@ document.head || (document.head = document.getElementsByTagName('head')[0]);
 
 function changeFavicon(src) 
 {
-    /*var link = document.createElement('link'), oldLink = document.getElementById('dynamic-favicon');
-    link.id = 'dynamic-favicon';
-    link.rel = 'shortcut icon';
-    link.href = src;
-    if (oldLink) {
-        document.head.removeChild(oldLink);
-    }
-    document.head.appendChild(link);
-	*/
+  
     var xhr = new XMLHttpRequest();
 	xhr.open('GET', src, true);
 	xhr.responseType = 'blob';

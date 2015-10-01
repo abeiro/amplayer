@@ -37,6 +37,19 @@ body {
   font-family: Montserrat;
 }
 
+#nextTitle{
+  font-size: small;
+  padding:0px;
+  margin:0px;
+  text-shadow: 0 0 3px black, 0 0 5px black;
+  color:white;
+  font-family: Montserrat;
+  /* font-style: italic; */
+  margin-top: 20px;
+  right: 0px;
+  /* text-align: right; */
+}
+
 #art {
   max-width:128px;
   max-height:128px;
@@ -120,15 +133,50 @@ div.plButton:hover {
 #toolbar span {
   cursor:pointer;
   border-radius:5px;
-  border:1px solid lightgray;
   padding:2px;
-  font-weight:bold;
   font-family: Montserrat;
+  display: inline-block;
+  background-size: auto 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 30px;
+  color: transparent;
+  min-width: 48px;
 }
 
 #cNext:hover,#cPrev:hover,#cSettings:hover {
   opacity:0.75;
 
+}
+#cPrev {
+	background-image: url(../img/prev256.png);
+}
+#cNext {
+	background-image: url(../img/next256.png);
+}
+#cRandomPl {
+	background-image: url(../img/random256.png);
+}
+#cSettings {
+	background-image: url(../img/settings256.png);
+}
+#cReload {
+	background-image: url(../img/reload256.png);
+}
+#cLike {
+	background-image: url(../img/share256.png);
+}
+#cShow {
+	background-image: url(../img/show256.png);
+}
+#cLyrics {
+	background-image: url(../img/lyrics256.png);
+}
+#cInfo {
+	background-image: url(../img/info256.png);
+}
+#cLastFM {
+	background-image: url(../img/as256.png);
 }
 
 #settings {
@@ -229,15 +277,7 @@ html:fullscreen {
     background: black;
 }
 
-#cLike {
-	background-image:url(../img/like.png);
-	background-position:center left;
-	background-repeat: no-repeat;
-	
-	margin: 0px;
-	padding: 0px;
-	bottom: 0px;
-}
+
 
 
 
@@ -321,4 +361,33 @@ html:fullscreen {
 	text-decoration:none;
 	text-shadow:0 0 10px blue;
 	font-size: small;
+}
+
+#webviewer {
+	/* display:none; */
+	position: absolute;
+	top: 0px;
+	width: 99%;
+	height: 99%;
+	z-index: 10000;
+	border:1% solid gray;
+}
+
+#webwindow {
+	width: 100%;
+	height: 100%;
+}
+
+#myCanvas {
+    /* z-index: 10; */
+    position: absolute;
+    bottom: 9%;
+    right: 0px;
+    height: 30%;
+ 
+}
+#tags a {
+	color: black;
+    text-shadow: 1px 1px 1px white, -1px -1px 1px white;
+    
 }
