@@ -384,7 +384,7 @@ html:fullscreen {
     bottom: 9%;
     right: 0px;
     height: 30%;
- 
+    /* width: 100%; */
 }
 #tags a {
 	color: black;

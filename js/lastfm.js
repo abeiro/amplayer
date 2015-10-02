@@ -206,17 +206,18 @@ LASTFM.prototype.updateTags=function(song) {
 
 		$("#myCanvas").fadeIn();
 
-		/*$.get(_lfm.LASTFM_URLWS+_lfm.buildRequest("artist.getinfo","&mbid="+song.artist_mbid)+"&format=json",
-		function (e) {
-			for (i in e.artist.image) {
-				if (e.artist.image[i].size=="medium") {
-					$("#tags").append("<a weight='100'><img id='tag"+i+"' style=''></a>")
-					conn.loadImageCached(e.artist.image[i]["#text"],_("tag"+i))
-					_("tag"+i).style.display="block";
+		if (_("showCanvasImg").src=="img/defaultbg.png") {
+			$.get(_lfm.LASTFM_URLWS+_lfm.buildRequest("artist.getinfo","&mbid="+song.artist_mbid)+"&format=json",
+			function (e) {
+				for (i in e.artist.image) {
+					if (e.artist.image[i].size=="mega") {
+						conn.loadImageCached(e.artist.image[i]["#text"],_("showCanvasImg"))
+
+					}
 				}
-			}
-			setTimeout(function() {$('#myCanvas').tagcanvas("reload")},3000);
-		});*/
+				setTimeout(function() {$('#myCanvas').tagcanvas("reload")},3000);
+			});
+		}
 	} 
 	)
 }

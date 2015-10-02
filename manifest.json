@@ -12,7 +12,7 @@
    "manifest_version": 2,
    "name": "AMPlayer",
    "permissions": [ "webview", "http://*/", "notifications", "storage" ,"https://www.google-analytics.com/","fullscreen","identity","<all_urls>","unlimitedStorage"],
-   "content_security_policy": "img-src 'self' * http://*/ https://*/ ; frame-src www.last.fm ",
+   
     
    "version": "0.5.0"
 }

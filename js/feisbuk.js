@@ -51,8 +51,8 @@ function publishOnFaceBook() {
 
                 s="http://amplayer.xyz/share/?caption="+encodeURIComponent("Just listened "+a.title+" ("+a.artist+")")+"&link="+link+"&redirect_uri="+encodeURIComponent("https://goo.gl/lfF9vO")+"&picture="+encodeURIComponent(picture)+"&mbid="+a.mbid
                 console.log(s);
-                window.open(s);
-                //openWindow(s,'Share','socialWindow')
+                //window.open(s);
+                openWindow(s,'Share','socialWindow')
                 
                 $("#cLike").fadeIn();
 	} catch (e) {
@@ -72,6 +72,12 @@ function openWindow(wurl,wtitle,wid) {
 	
 				lastfmwindow.onClosed.addListener(function (e) {
 					console.log(wid+" closed "+e)
+				
+				})
+
+				lastfmwindow.addEventListener('permissionrequest', function(e) {
+					console.log(e)
+					 e.request.allow();
 				
 				})
 			}
