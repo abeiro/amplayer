@@ -206,7 +206,7 @@ LASTFM.prototype.updateTags=function(song) {
 
 		$("#myCanvas").fadeIn();
 
-		if (_("showCanvasImg").src=="img/defaultbg.png") {
+		if (_("showCanvasImg").src.indexOf("defaultbg")>2) {
 			$.get(_lfm.LASTFM_URLWS+_lfm.buildRequest("artist.getinfo","&mbid="+song.artist_mbid)+"&format=json",
 			function (e) {
 				for (i in e.artist.image) {
@@ -267,7 +267,7 @@ function getAverageRGB(imgEl) {
     rgb.g = ~~(rgb.g/count);
     rgb.b = ~~(rgb.b/count);
 
-    return "rgb("+(rgb.r|128)+","+(rgb.g|128)+","+(rgb.b|128)+")";
+    return "rgb("+(rgb.r^255)+","+(rgb.g^255)+","+(rgb.b^255)+")";
 
 }
 

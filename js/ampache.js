@@ -153,6 +153,10 @@ AMPACHE.prototype.createObjectURL = function (file) {
 
 
 AMPACHE.prototype.loadImageCached = function (resource, ele) {
+	if (resource=="img/defaultbg.png") {
+		ele.src=resource;
+		return;
+	}
 	var cKey = "i_" + CryptoJS.SHA256(resource).toString();
 	var _this = this;
 	if (browserApi)
@@ -216,6 +220,8 @@ AMPACHE.prototype.loadImageCached = function (resource, ele) {
 AMPACHE.prototype.loadImage = function (resource, ele) {
 	if (resource=="img/defaultbg.png") {
 		ele.src=resource;
+		console.log("Using def bg")
+		return;
 	}
 
 	if (browserApi == false) {
@@ -290,7 +296,7 @@ AMPACHE.prototype.localplay = function (songnumber) {
 	} catch (idontcare) {}
 
 	
-	setTimeout(function(){ conn.afterplay() }, 3000);
+	setTimeout(function(){ conn.afterplay() }, 5000);
 	
 
 
@@ -568,7 +574,7 @@ function initSystem() {
 
 	_("cLike").addEventListener("click", function () {
 		publishOnFaceBook();
-		conn._vote();
+		conn.vote();
 	});
 
 	_("cShow").addEventListener("click", function () {
