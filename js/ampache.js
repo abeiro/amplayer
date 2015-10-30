@@ -408,7 +408,7 @@ AMPACHE.prototype.loadArt = function (song_mbid) {
 				function (dataSong) {
 					console.log(dataSong.releases);
 					if (!gUseInternalProxy)
-						fanUrl="http://api.fanart.tv/webservice/artist/" + FANARTAPIKEY + "/" + dataSong["artist-credit"][0].artist.id + "/JSON/artistbackground"
+						fanUrl="http://webservice.fanart.tv/v3/music/" + dataSong["artist-credit"][0].artist.id + "?api_key=" + FANARTAPIKEY + ""
 					else
 						fanUrl="proxy.php?url="+encodeURIComponent("http://api.fanart.tv/webservice/artist/" + FANARTAPIKEY + "/" + dataSong["artist-credit"][0].artist.id + "/JSON/artistbackground");
                                         
@@ -416,19 +416,19 @@ AMPACHE.prototype.loadArt = function (song_mbid) {
 						function (dataSong) {
 							CustomStorage.setVar("cache_" + song_mbid, dataSong,function (e) {console.log(e)});
 							try {
-								a = dataSong[Object.keys(dataSong)[0]].artistbackground;
+								a = dataSong.artistbackground;
 								if (a.length>1) {
 									rndIndex = Math.floor((Math.random() * a.length));
-									while (_("showCanvasImg").realsource==dataSong[Object.keys(dataSong)[0]].artistbackground[rndIndex].url) {
+									while (_("showCanvasImg").realsource==dataSong.artistbackground[rndIndex].url) {
 										console.log("Same faart, retrying"+_("showCanvasImg").realsource);
 										rndIndex = Math.floor((Math.random() * a.length));
 									}
 								} else
 									rndIndex=0;
 								
-								_("showCanvasImg").realsource=dataSong[Object.keys(dataSong)[0]].artistbackground[rndIndex].url;
-								img = dataSong[Object.keys(dataSong)[0]].artistbackground[rndIndex].url;
-								_this._songs.root.song[currentSong].fanart=dataSong[Object.keys(dataSong)[0]].artistbackground[rndIndex].url;
+								_("showCanvasImg").realsource=dataSong.artistbackground[rndIndex].url;
+								img = dataSong.artistbackground[rndIndex].url;
+								_this._songs.root.song[currentSong].fanart=dataSong.artistbackground[rndIndex].url;
 								_this.loadImageCached(img, _("showCanvasImg"));
 							} catch (imgNotAvailable) {
 								console.log("Image not available for: "+song_mbid);
@@ -443,6 +443,7 @@ AMPACHE.prototype.loadArt = function (song_mbid) {
 		}
 	});
 }
+
 
 
 function markSong(i) {
