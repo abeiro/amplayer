@@ -1,54 +1,56 @@
+@media (orientation: landscape) {
+	body {
+		/* font-family: sans-serif; */
+		color:white;
+		background-color: black;
+		overflow:hidden;zoom:1;
+	}
 
-body {
-    /* font-family: sans-serif; */
-    color:white;
-    background-color: black;
-    overflow:hidden;zoom:1;
+	#title {
+	  font-size: xx-large;
+	}
+
+	#artist {
+	  font-size: x-large;
+	  color: #BABFE0;
+	}
+
+	#album {
+	  font-size: large;
+	  color: #BABFE0;
+	}
+
+
+	#playlist {
+	  font-size: large;
+	}
+
+
+	#playlistContent tr td {
+	  font-size: large;
+	}
+
+	#toolbar {
+	  font-size: large;
+	}
+
+	#settings {
+			font-size:x-large;
+
+	}
+
+	#settings *{
+		font-size:xx-large;
+	}
+
+	#settings #versionLabel {
+		font-size:medium;
+	}
+
+
+	#lyricsCanvas {
+		font-size: medium;
+	}
+
+
 }
-
-#title {
-  font-size: xx-large;
-}
-
-#artist {
-  font-size: x-large;
-  color: #BABFE0;
-}
-
-#album {
-  font-size: large;
-  color: #BABFE0;
-}
-
-
-#playlist {
-  font-size: large;
-}
-
-
-#playlistContent tr td {
-  font-size: large;
-}
-
-#toolbar {
-  font-size: large;
-}
-
-#settings {
-        font-size:x-large;
-
-}
-
-#settings *{
-	font-size:xx-large;
-}
-
-#settings #versionLabel {
-	font-size:medium;
-}
-
-
-#lyricsCanvas {
-    font-size: medium;
-}
-

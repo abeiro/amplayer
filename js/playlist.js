@@ -71,6 +71,14 @@ function loadPlayList()
     //document.querySelector(".plButton").onclick=function() {conn.nextSong()}
     conn.loadImage("img/logo.png", _("art"));
     ceventFired(null);
+	
+    changeListModelMob(songlist,conn._songs.root.song);
+    
+    simpleplaylistCtl.value=""
+    changeDatalistModel(songlistSearch,conn._songs.root.song);
+    //simpleplaylistCtl.focus();
+    
+
 }
 function randomizePL() 
 {
@@ -128,5 +136,42 @@ function changeListModel(element,newopts) {
 	for (var k in newopts) {
 		element.options[i++] = new Option(newopts[k],k);
 	}
+
+}
+
+function changeListModelMob(element,newopts,filter) {
+	removeAllChilds(element);
+	ul=document.createElement("ul");
+	element.appendChild(ul);
+	for (j=0;j<newopts.length;j++) {
+		if (filter !=null) {
+			if (newopts[j].title.indexOf(filter)==-1)
+			continue;
+		}
+		t=document.createElement("li");
+		t.innerHTML=(j+1)+". "+newopts[j].title +" :: "+newopts[j].artist;
+		t.setAttribute("songId",j);
+		t.idx=j;
+		t.onclick=function() {
+			conn.localplay(event.target.idx);
+		}
+		ul.appendChild(t);
+	}
+
+}
+
+function changeDatalistModel(element,newopts,filter) {
+	removeAllChilds(element);
+
+	for (j=0;j<newopts.length;j++) {
+		if (filter !=null) {
+			if (newopts[j].title.indexOf(filter)==-1)
+			continue;
+		}
+		o=new Option("",newopts[j].title);
+		element.appendChild(o);
+		
+	}
+
 
 }

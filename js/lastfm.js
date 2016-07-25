@@ -151,15 +151,24 @@ LASTFM.prototype.auth=function() {
 }
 
 LASTFM.prototype.scrobble=function(song) {
+	console.log("SCROBBLE: setting TO:"+song)
+	console.log(song);
+	var _song=song;
 	_lfm=this;
-	request=_lfm.buildRequest("track.scrobble","&mbid="+song.mbid+"&artist="+encodeURIComponent(song.artist)+"&track="+encodeURIComponent(song.title)+"&timestamp="+(Math.floor(new Date().getTime()/1000)-60));
-
-	$.post(_lfm.LASTFM_URLWS,request,
-		function (data) { 
-			console.log(data) 
-			
+	setTimeout(function() {
+		if (_song.mbid!=conn._songs.root.song[currentSong].mbid) {
+			console.log("SCROBBLE: Not enough listening time to scrobble:"+_song.mbid+" vs "+conn._songs.root.song[currentSong].mbid);
+			return;
 		}
-	)
+		
+		request=_lfm.buildRequest("track.scrobble","&mbid="+_song.mbid+"&artist="+encodeURIComponent(_song.artist)+"&track="+encodeURIComponent(_song.title)+"&timestamp="+(Math.floor(new Date().getTime()/1000)-60));
+		$.post(_lfm.LASTFM_URLWS,request,
+			function (data) { 
+				console.log("SCROBBLE:"+data) 
+				console.log(data);
+			}
+		)
+	},60000);
 }
 
 LASTFM.prototype.buildRequest=function(wmethod,parms) {
@@ -215,7 +224,7 @@ LASTFM.prototype.updateTags=function(song) {
 
 					}
 				}
-				setTimeout(function() {$('#myCanvas').tagcanvas("reload")},3000);
+				setTimeout(function() {$('#myCanvas').tagcanvas("reload")},6000);
 			});
 		}
 	} 

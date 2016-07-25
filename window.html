@@ -43,7 +43,8 @@
 					Your browser does not support the audio tag.
 				</audio>
 			</div>
-			<select id="playlistselect"></select>
+			<select id="playlistalbum" placeholder="Albums"></select>
+			<select id="playlistselect"  placeholder="Lists"></select>
 			
 			<div id="toolbar">
 				<span id="cPrev"></span>
@@ -58,13 +59,19 @@
 				<span id="cLastFM" title="Activate last.FM scrobbling"></span>
 			</div>
 			<div id="playlist"></div>
+			<div id="simpleplaylist" />
+    			<input type="text" list="songlistSearch" id="simpleplaylistCtl" placeholder="Search song"/>
+				<datalist id="songlistSearch"></datalist>
+				<div id="songlist" ></div>
+
+			</div>
 			
 		
 		</div>
 		<div id="showCanvas">
-			<div id="lyricsCanvas">Configure lyrics in settings</div>
-			<img id="showCanvasImg" src="img/defaultbg.png"/>
-			<div id="infoCanvas">
+			<div id="lyricsCanvas" style="display:none">Configure lyrics in settings</div>
+			<img id="showCanvasImg" src="img/defaultbg.png" style="display:none"/>
+			<div id="infoCanvas" style="display:none">
 				<img id="infoCanvasImg"></img>
 				<div id="infoCanvasReal"></div>
 			</div>
@@ -92,9 +99,9 @@
 					Sometimes you will need to press "Clear Cache" and restart app after an upgrade.
 				</p>
 				<p style="font-size:14px">
-					Demostration Ampache server: http://smellof.tk/ampachedemo/. User/Pass: guest
+					Demostration Ampache server: http://chicago.amplayer.xyz/ampachedemo/. User/Pass: guest
 				</p>
-				<span style='' id="versionLabel">v0.5.2</span>
+				<span style='' id="versionLabel">v0.6.1</span>
 		</div>
 
 		

@@ -51,7 +51,7 @@ var app =
         receivedElement.setAttribute('style', 'display:block;');
         console.log('Received Event: ' + id);
         } catch (e) {
-        	console.log('Exception: ' );
+        	console.log('Exception: '+e );
         }
     }
 };

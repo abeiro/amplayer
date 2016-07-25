@@ -20,7 +20,7 @@ function showPopup(thumb, title, tbody)
     }
     if (window.Notification.permission == "granted") 
     {
-        var popup = new window.Notification(title,{body:tbody,icon:thumb});
+        var popup = new window.Notification(title,{body:tbody,icon:_("art").src});
 		
         setTimeout(function () 
         {

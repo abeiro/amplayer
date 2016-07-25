@@ -43,6 +43,8 @@ function _getCachedDataNew(cmd, durl, ret)
 				//r.root.song[i][songsNodes[i].children[j].nodeName]=songsNodes[i].children[j].textContent;
 				if (songsNodes[i].childNodes[j].nodeName!="#text")
 					r.root.song[i][songsNodes[i].childNodes[j].nodeName]=songsNodes[i].childNodes[j].textContent;
+				if (songsNodes[i].childNodes[j].nodeName=="album")	
+					r.root.song[i].album_id=songsNodes[i].childNodes[j].id;
 
 			}
 			// for (j=0;j<mysongs[0].children.length;j++) { console.log(mysongs[0].children[j].nodeName) }
