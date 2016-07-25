@@ -1,0 +1,514 @@
+body {
+    /* font-family: sans-serif; */
+    color:white;
+    background-color: black;
+    overflow:hidden;
+    zoom: 1;
+    height: 100%;
+}
+
+#title {
+  font-size: x-large;
+  padding:0px;
+  margin:0px;
+  /*text-shadow: 2px 2px 2px black,-2px -2px -2px black;*/
+  text-shadow: 0 0 3px black, 5px 5px 5px black;
+  color:white;
+  font-family: Montserrat;
+  white-space: nowrap;
+}
+
+#artist {
+  font-size: x-large;
+  padding:0px;
+  margin:0px;
+  text-shadow: 0 0 3px black, 5px 5px 5px black;
+  color:white;
+  font-family: Montserrat;
+}
+
+#album {
+  font-size: large;
+  padding:0px;
+  margin:0px;
+  text-shadow: 0 0 3px black, 5px 5px 5px black;
+  color:white;
+  font-family: Montserrat;
+  white-space: nowrap;
+}
+
+#nextTitle{
+  font-size: small;
+  padding:0px;
+  margin:0px;
+  text-shadow: 0 0 3px black, 5px 5px 5px black;
+  color:white;
+  font-family: Montserrat;
+  /* font-style: italic; */
+  margin-top: 20px;
+  right: 0px;
+  /* text-align: right; */
+}
+
+#art {
+  width:25%;
+  height:auto;
+  z-index:-1;
+}
+
+#playerCanvas {
+   width: 98%;
+   position:relative;
+   left:1%;
+   height: 100%;
+}
+
+#playlist {
+  font-size: large;
+  visible:false;
+  display:none;
+  width:0px;
+  height:0px;
+
+}
+
+#playlistContent {
+  width:480px;
+  color:black;
+  font-family: Montserrat;
+}
+
+#playlistContent   thead th {
+  color:white;
+
+}
+
+#playlistContent tr td {
+  font-size: large;
+  white-space:nowrap;
+  overflow:hidden;
+  padding-left:5px;
+}
+
+
+#playlistContent_paginate a.paginate_enabled_previous  {
+	color:white !important;
+
+}
+
+#playlistContent_paginate a.paginate_disabled_previous  {
+	color:gray !important;
+
+}
+#playlistContent_paginate a.paginate_enabled_next  {
+	color:white !important;
+
+}
+#playlistContent_paginate a.paginate_disabled_next  {
+	color:gray !important;
+
+}
+
+
+div.plButton {
+    color:transparent;
+    background-image:transparent;
+    width:48px;
+    height:48px;
+    cursor:pointer;
+}
+
+div.plButton:hover {
+	opacity:0.75;
+
+}
+
+#toolbar {
+  border:0px solid gray;
+  font-size:x-large;
+  /* background-color:#424242; */
+  color:white;
+  padding:5px;
+  margin-top: 9px;
+  width: 99%;
+  height:50%;
+  /* display: block; */
+  /* min-height: 90px; */
+  text-align:center;
+  height: 280px;
+  background-color: rgba(128,128,128,0.8);
+  margin-bottom: 5px;
+}
+
+#toolbar span {
+  cursor:pointer;
+  border-radius:5px;
+  padding:2px;
+  font-family: Montserrat;
+  display: inline-block;
+  background-size: auto 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 30px;
+  color: transparent;
+  
+  width:15%;
+  border:0px solid grey;
+  min-height:96px;
+  margin:15px;
+
+
+}
+
+#cNext:hover,#cPrev:hover,#cSettings:hover {
+  opacity:0.75;
+
+}
+#cPrev {
+	background-image: url(../img/prev256.png);
+}
+#cNext {
+	background-image: url(../img/next256.png);
+}
+#cRandomPl {
+	background-image: url(../img/random256.png);
+}
+#cSettings {
+	background-image: url(../img/settings256.png);
+}
+#cReload {
+	background-image: url(../img/reload256.png);
+}
+#cLike {
+	background-image: url(../img/share256.png);
+}
+#toolbar #cShow {
+	background-image: url(../img/show256.png);
+	display:none;
+}
+#cLyrics {
+	background-image: url(../img/lyrics256.png);
+}
+#cInfo {
+	background-image: url(../img/info256.png);
+}
+#cLastFM {
+	background-image: url(../img/as256.png);
+}
+
+#settings {
+	display:none;
+	position:absolute;
+	background-color: white;
+	top:0px;
+	left:0px;
+	width:100%;
+	height:100%;
+	color:black;
+	/* min-height:400px; */
+	padding:15px;
+	font-size: 32px;
+	font-family: Montserrat;
+}
+
+#settings *{
+	font-size:xx-large;
+
+}
+
+#settings input[type=checkbox],#settings input{
+	border:1px solid black;
+	background-color:gray;
+	/* width: 99%; */
+}
+
+#settings input[type=checkbox] {
+    height: 3%;
+    width: 3%;
+}
+
+#settings #versionLabel {
+	font-size:medium;
+	top: 0px;
+	right: 50px;
+	position: absolute;
+	z-index: 1;
+	color: black;
+}
+
+#subHeader {
+	height:130px;
+	zoom:2
+	/* background-color: black; */
+	/* width: 100%; */
+}
+
+
+#showCanvas {
+	min-height:300px;
+	min-width:300px;
+	display: block;
+	position: absolute;
+	top: 0px;
+	lefT: 0px;
+	z-index: -2;
+	overflow:hidden;
+	width: 100%;
+        border: 0px;
+        margin: 0px;
+        padding: 0px;
+        height:100%;
+}
+#showCanvasImg {
+	overflow:hidden;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height:100%;
+}
+
+#playlistselect {
+	zoom:3;
+	width:100%;
+	background-color: black;
+	color: white;
+	border-radius: 5px;
+	margin-top:5px;
+	font-family: Montserrat;
+	height:30px;
+	
+}
+
+#playlistalbum {
+	zoom:3;
+	background-color: black;
+	color: white;
+	border-radius: 5px;
+	width:100%;
+	margin-top:5px;
+	font-family: Montserrat;
+	height:30px;
+	
+}
+#songlist ul {
+	margin-left:2px;
+	padding:2px;
+
+}
+#songlist {
+	zoom:3;
+	background-color: black;
+	color: white;
+	border-radius: 5px;
+	width:98%;
+	margin-top:5px;
+	font-family: Montserrat;
+	/* min-height: 150px; */
+	height: 80%;
+	overflow-y:auto;
+	overflow-x:hidden;
+	white-space:nowrap;
+	/* padding-top:5px; */
+	padding-left:5px;
+	/* padding-bottom:5px; */
+	border:1px solid grey;
+}
+
+#songlist li {
+	white-space:nowrap;
+	padding-left:5px;
+	font-size:small;
+	cursor:pointer;
+	margin-top:5px;
+	margin-bottom:5px;
+
+}
+
+#songlist li.liselected {
+	color:#ff0000;
+	/* font-style:italic; */
+}
+
+#fullScreenButton {
+	position:absolute;
+	top:0px;
+	right:0px;
+	color:white;
+	cursor:pointer;
+	z-index:2;
+	display: none;
+}
+
+html:-moz-full-screen {
+    background: black;
+}
+ 
+html:-webkit-full-screen {
+    background: black;
+}
+ 
+html:fullscreen {
+    background: black;
+}
+
+
+
+
+
+::-webkit-scrollbar {
+    height: 12px;
+    width: 12px;
+    background: transparent;
+    }
+::-webkit-scrollbar-thumb {
+    background: gray;
+    -webkit-border-radius: 1ex;
+    -webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.75);
+    height:90%;
+}
+::-webkit-scrollbar-corner {
+    background: white;
+}
+
+#infoCanvas {
+    position: absolute;
+    width: 100%;
+    top:0px;
+    height:100%;
+    z-index:10;
+    background-color:black;
+    font-size: 32px;
+    overflow-y: auto;
+    border: 1px solid grey;
+    padding: 0px;
+    /* margin: 1px; */
+}
+
+#lyricsCanvas {
+    position: absolute;
+    width: 100%;
+    top:0px;
+    height:100%;
+    z-index:10;
+    background-color:black;
+    font-size: 96px;
+    overflow-y: auto;
+    border: 1px solid grey;
+    padding: 0px;
+    /* margin: 1px; */
+}
+
+#lyricsCanvas * {
+
+}
+
+#infoCanvasReal * {
+	 color: rgba(255,255,255,255);
+	 text-shadow:1px 1px 1px rgba(0,0,255,255);
+}
+#infoCanvasImg {
+	width:50%;
+	float:lefT;
+	margin:5px;
+}
+
+#infoCanvas li a {
+	color:white;
+	text-decoration:none;
+	text-shadow:0 0 10px blue;
+	font-size: 10px;
+	line-height: 12px;
+	display: inline-block;
+	vertical-align: top;
+}
+
+#webviewer {
+	/* display:none; */
+	position: absolute;
+	top: 0px;
+	width: 99%;
+	height: 99%;
+	z-index: 10000;
+	border:1% solid gray;
+}
+
+#webwindow {
+	width: 100%;
+	height: 100%;
+}
+
+#myCanvas {
+    /* z-index: 10; */
+    position: absolute;
+    bottom: 9%;
+    right: 0px;
+    height: 30%;
+    /* width: 100%; */
+}
+#tags a {
+	color: black;
+    text-shadow: 1px 1px 1px white, -1px -1px 1px white;
+    
+}
+
+#ampacheplayer {
+	width: 100%;
+	font-size:xx-large;
+	zoom: 3;
+	margin-bottom:5px;
+	margin-top:2px;
+}
+
+#simpleplaylistCtl {
+	width: 99%;
+	zoom:3.5;
+	/* margin-top:15px; */
+	/*display:none;*/
+}
+
+
+#simpleplaylist {
+	min-height: 350px;
+	height: 45%;
+	position: absolute;
+	width: 100%;
+	/* top: 50%; */
+}
+
+audio::-webkit-media-controls-panel {
+	background-color: rgba(255,255,255,0.8);
+	color:black;
+}
+
+audio::-webkit-media-controls {
+	opacity:1
+}
+
+audio::-webkit-media-controls-play-button {
+	/* color: white; */
+	/* color: rgba(255,255,255,255); */
+	/* opacity: 1; */
+	/* box-shadow: 1px 1px 1px white; */
+	/* background-image: url(../img/play.svg); */
+	/* background-size: 22px 22px; */
+	/* background-position: center center; */
+	/* background-repeat: no-repeat; */
+	/* background-color: white; */
+}
+
+audio::-webkit-media-controls-play-button:active {
+	color: white;
+	color: rgba(255,255,255,255);
+	opacity: 1;
+	/* box-shadow: 1px 1px 1px white; */
+	background-image: url(../img/pause.svg);
+	background-size: 22px 22px;
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+#infoCanvas li {
+	font-size:32px;
+	color: white;
+	zoom: 3;
+}
